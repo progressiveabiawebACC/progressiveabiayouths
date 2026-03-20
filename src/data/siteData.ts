@@ -3,10 +3,10 @@ export const heroSlides = [
   {
     id: 1,
     title: "Raising Unconventional Youths",
-    subtitle: "Building leaders who challenge the status quo and create positive change in Abia State.",
+    subtitle: "Transforming good thoughts into democratic actions for a progressive Abia State.",
     cta1: { label: "Learn More", link: "/about" },
     cta2: { label: "Join Us", link: "/register" },
-    image: "/placeholder.svg",
+    image: "/images/heroes/hero-1.jpg",
   },
   {
     id: 2,
@@ -14,7 +14,7 @@ export const heroSlides = [
     subtitle: "Creating platforms for young Abians to participate in governance and civic engagement.",
     cta1: { label: "Our Events", link: "/events" },
     cta2: { label: "Join Us", link: "/register" },
-    image: "/placeholder.svg",
+    image: "/images/heroes/hero-2.jpeg",
   },
   {
     id: 3,
@@ -22,21 +22,21 @@ export const heroSlides = [
     subtitle: "To steer the course of progressive development in Abia State through youth empowerment.",
     cta1: { label: "View Portfolio", link: "/portfolio" },
     cta2: { label: "Join Us", link: "/register" },
-    image: "/placeholder.svg",
+    image: "/images/heroes/hero-3.jpeg",
   },
 ];
 
 // ========== CORE VALUES ==========
 export const coreValues = [
-  { icon: "🤝", name: "Inclusion", description: "Embracing diversity and ensuring every voice is heard." },
-  { icon: "⚖️", name: "Fairness", description: "Just and equitable treatment for all." },
-  { icon: "🗳️", name: "Equal Representation", description: "Ensuring balanced participation across all demographics." },
-  { icon: "💎", name: "Character", description: "Upholding strong moral values and integrity." },
-  { icon: "🔍", name: "Transparency", description: "Open and honest in all our engagements." },
-  { icon: "💡", name: "Creativity", description: "Innovative approaches to problem-solving." },
-  { icon: "🇳🇬", name: "Patriotism", description: "Love for our state and nation." },
-  { icon: "🤲", name: "Unity", description: "Strength through collective action." },
-  { icon: "❤️", name: "Love", description: "Compassion and care for our communities." },
+  { icon: "Users", name: "Inclusion", description: "Embracing diversity and ensuring every voice is heard." },
+  { icon: "Scale", name: "Fairness", description: "Just and equitable treatment for all." },
+  { icon: "UserCheck", name: "Equal Representation", description: "Ensuring balanced participation across all demographics." },
+  { icon: "Shield", name: "Character", description: "Upholding strong moral values and integrity." },
+  { icon: "Eye", name: "Transparency", description: "Open and honest in all our engagements." },
+  { icon: "Lightbulb", name: "Creativity", description: "Innovative approaches to problem-solving." },
+  { icon: "Flag", name: "Patriotism", description: "Love for our state and nation." },
+  { icon: "Handshake", name: "Unity", description: "Strength through collective action." },
+  { icon: "Heart", name: "Love", description: "Compassion and care for our communities." },
 ];
 
 // ========== STATS ==========
@@ -52,12 +52,12 @@ export const founder = {
   name: "Ekejiuba Daberechi Kingsley",
   title: "Founder & Convener",
   bio: "A visionary leader passionate about youth empowerment and civic engagement in Abia State. Ekejiuba founded Progressive Abia Youths with the mission of raising unconventional youths who will drive positive change and progressive development.",
-  image: "/placeholder.svg",
+  image: "/images/team/founder.png",
 };
 
 // ========== TEAM - THE FRONTIERS ==========
 export const teamMembers = [
-  { name: "Ekejiuba Daberechi Kingsley", role: "Convener", image: "/placeholder.svg" },
+  { name: "Ekejiuba Daberechi Kingsley", role: "Convener", image: "/images/team/founder.png" },
   { name: "Team Member 2", role: "Deputy Convener", image: "/placeholder.svg" },
   { name: "Team Member 3", role: "Secretary General", image: "/placeholder.svg" },
   { name: "Team Member 4", role: "Director of Finance", image: "/placeholder.svg" },
@@ -107,7 +107,7 @@ export const events: EventItem[] = [
     time: "10:00 AM",
     location: "Umuahia City Hall, Umuahia",
     category: "Voter Sensitization",
-    image: "/placeholder.svg",
+    image: "/images/events/voter-sensitization.jpg",
   },
   {
     id: "2",
@@ -117,7 +117,7 @@ export const events: EventItem[] = [
     time: "9:00 AM",
     location: "Abia State University, Uturu",
     category: "Laptop Support",
-    image: "/placeholder.svg",
+    image: "/images/events/laptop-support.jpg",
   },
   {
     id: "3",
@@ -127,7 +127,7 @@ export const events: EventItem[] = [
     time: "2:00 PM",
     location: "National Museum, Umuahia",
     category: "Scholarships",
-    image: "/placeholder.svg",
+    image: "/images/events/laptop-distribution.jpg",
   },
   {
     id: "4",
@@ -137,7 +137,7 @@ export const events: EventItem[] = [
     time: "11:00 AM",
     location: "Press Center, Aba",
     category: "Press Conference",
-    image: "/placeholder.svg",
+    image: "/images/events/press-conference.jpeg",
   },
   {
     id: "5",
@@ -147,7 +147,7 @@ export const events: EventItem[] = [
     time: "10:00 AM",
     location: "Abia State Civic Center",
     category: "Quiz Competition",
-    image: "/placeholder.svg",
+    image: "/images/events/press-briefing.jpeg",
   },
 ];
 
@@ -175,7 +175,7 @@ export const blogPosts: BlogPost[] = [
     date: "2026-03-01",
     category: "Governance",
     tags: ["youth", "governance", "democracy"],
-    image: "/placeholder.svg",
+    image: "/images/events/press-conference-2.jpg",
     readTime: "5 min read",
   },
   {
@@ -187,7 +187,7 @@ export const blogPosts: BlogPost[] = [
     date: "2026-02-15",
     category: "Education",
     tags: ["education", "technology", "rural"],
-    image: "/placeholder.svg",
+    image: "/images/events/laptop-support.jpg",
     readTime: "4 min read",
   },
   {
@@ -199,7 +199,7 @@ export const blogPosts: BlogPost[] = [
     date: "2026-01-20",
     category: "Vision",
     tags: ["vision", "strategy", "abia"],
-    image: "/placeholder.svg",
+    image: "/images/events/press-conference-3.jpg",
     readTime: "7 min read",
   },
   {
@@ -211,7 +211,7 @@ export const blogPosts: BlogPost[] = [
     date: "2025-12-10",
     category: "Education",
     tags: ["scholarship", "education", "success"],
-    image: "/placeholder.svg",
+    image: "/images/events/laptop-distribution.jpg",
     readTime: "6 min read",
   },
 ];
@@ -226,22 +226,30 @@ export type PortfolioItem = {
 };
 
 export const portfolioItems: PortfolioItem[] = [
-  { id: "1", title: "Voter Sensitization Rally 2025", description: "Mass voter education campaign across Umuahia", category: "Campaigns", image: "/placeholder.svg" },
-  { id: "2", title: "Laptop Distribution Program", description: "50 laptops distributed to students in rural areas", category: "Education", image: "/placeholder.svg" },
-  { id: "3", title: "Youth Leadership Summit", description: "Annual gathering of young leaders from all 17 LGAs", category: "Events", image: "/placeholder.svg" },
-  { id: "4", title: "Community Clean-Up Drive", description: "Environmental awareness campaign in Aba", category: "Community", image: "/placeholder.svg" },
-  { id: "5", title: "Scholarship Award Ceremony", description: "Honoring academic excellence among Abia youths", category: "Education", image: "/placeholder.svg" },
-  { id: "6", title: "Press Conference - Youth Agenda", description: "Presenting youth policy recommendations", category: "Campaigns", image: "/placeholder.svg" },
-  { id: "7", title: "Inter-LGA Sports Festival", description: "Promoting unity through sports across local government areas", category: "Events", image: "/placeholder.svg" },
-  { id: "8", title: "Digital Skills Workshop", description: "Training youths in web development and design", category: "Education", image: "/placeholder.svg" },
+  { id: "1", title: "Voter Sensitization Rally 2025", description: "Mass voter education campaign across Umuahia", category: "Campaigns", image: "/images/portfolio/portfolio-3.jpg" },
+  { id: "2", title: "Laptop Distribution Program", description: "50 laptops distributed to students in rural areas", category: "Education", image: "/images/portfolio/portfolio-5.jpg" },
+  { id: "3", title: "Youth Leadership Summit", description: "Annual gathering of young leaders from all 17 LGAs", category: "Events", image: "/images/portfolio/portfolio-1.jpg" },
+  { id: "4", title: "Community Engagement Drive", description: "Community outreach and youth engagement in Aba", category: "Community", image: "/images/portfolio/portfolio-2.jpg" },
+  { id: "5", title: "Scholarship Award Ceremony", description: "Honoring academic excellence among Abia youths", category: "Education", image: "/images/portfolio/portfolio-6.jpg" },
+  { id: "6", title: "Press Conference - Youth Agenda", description: "Presenting youth policy recommendations", category: "Campaigns", image: "/images/portfolio/portfolio-4.jpg" },
+  { id: "7", title: "Capacity Building Workshop", description: "Press briefing and capacity building sessions", category: "Events", image: "/images/portfolio/portfolio-7.jpeg" },
+  { id: "8", title: "Walk to Good Governance", description: "Campaign for good governance and civic participation", category: "Campaigns", image: "/images/portfolio/portfolio-8.jpeg" },
 ];
 
 // ========== PARTNERS ==========
 export const partners = [
-  { name: "Partner 1", logo: "/placeholder.svg" },
-  { name: "Partner 2", logo: "/placeholder.svg" },
-  { name: "Partner 3", logo: "/placeholder.svg" },
-  { name: "Partner 4", logo: "/placeholder.svg" },
+  { name: "NVDC", logo: "/images/partners/nvdc.png" },
+  { name: "The Compatriots", logo: "/images/partners/the-compatriots.png" },
+  { name: "OFIAR", logo: "/images/partners/ofiar.png" },
+  { name: "NPAG", logo: "/images/partners/npag.png" },
+  { name: "NYSC", logo: "/images/partners/nysc.png" },
+  { name: "Exalt Nigeria", logo: "/images/partners/exalt-nigeria.png" },
+  { name: "PRAWA", logo: "/images/partners/prawa.png" },
+  { name: "Living by Design", logo: "/images/partners/living-by-design.png" },
+  { name: "Ready to Lead Africa", logo: "/images/partners/ready-to-lead.png" },
+  { name: "APHCF", logo: "/images/partners/aphcf.png" },
+  { name: "Shift Nigeria", logo: "/images/partners/shift-nigeria.png" },
+  { name: "Imo Advocacy Group", logo: "/images/partners/imo-advocacy.jpg" },
 ];
 
 // ========== CONTACT INFO ==========

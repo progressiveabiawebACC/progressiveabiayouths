@@ -6,8 +6,8 @@ const Register = () => {
     <Layout>
       <section className="bg-primary py-16 sm:py-20">
         <div className="container text-center">
-          <h1 className="font-display text-3xl font-bold text-primary-foreground sm:text-4xl md:text-5xl">Join Us</h1>
-          <p className="mx-auto mt-4 max-w-2xl text-primary-foreground/80">
+          <h1 className="font-display text-3xl font-extrabold text-white sm:text-4xl md:text-5xl">Join Us</h1>
+          <p className="mx-auto mt-4 max-w-2xl text-base font-medium text-white/85">
             Become a member of Progressive Abia Youths and be part of the movement driving change in Abia State.
           </p>
         </div>

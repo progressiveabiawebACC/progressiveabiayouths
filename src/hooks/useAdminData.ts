@@ -36,7 +36,7 @@ export function useAdminTable<T extends TableName>(table: T) {
 
   const deleteMutation = useMutation({
     mutationFn: async (id: string) => {
-      const { error } = await supabase.from(table).delete().eq("id", id);
+      const { error } = await supabase.from(table).delete().eq("id" as any, id);
       if (error) throw error;
     },
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ["admin", table] }),

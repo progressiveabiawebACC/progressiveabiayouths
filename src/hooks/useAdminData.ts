@@ -27,7 +27,7 @@ export function useAdminTable<T extends TableName>(table: T) {
 
   const updateMutation = useMutation({
     mutationFn: async ({ id, ...updates }: TablesUpdate<T> & { id: string }) => {
-      const { data, error } = await supabase.from(table).update(updates as any).eq("id", id).select().single();
+      const { data, error } = await supabase.from(table).update(updates as any).eq("id" as any, id).select().single();
       if (error) throw error;
       return data;
     },

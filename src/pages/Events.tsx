@@ -4,11 +4,13 @@ import { Calendar, Clock, MapPin } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Layout from "@/components/Layout";
-import { events } from "@/data/siteData";
+import { useEvents } from "@/hooks/usePublicData";
 
 const categories = ["All", "Voter Sensitization", "Laptop Support", "Scholarships", "Press Conference", "Quiz Competition"];
 
 const Events = () => {
+  const { data: eventsData, isLoading } = useEvents();
+  const events = eventsData ?? [];
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [tab, setTab] = useState<"upcoming" | "past">("upcoming");
   const now = new Date().toISOString().split("T")[0];
@@ -19,7 +21,7 @@ const Events = () => {
     if (tab === "upcoming") result = result.filter((e) => e.date >= now);
     else result = result.filter((e) => e.date < now);
     return result.sort((a, b) => (tab === "upcoming" ? a.date.localeCompare(b.date) : b.date.localeCompare(a.date)));
-  }, [selectedCategory, tab, now]);
+  }, [events, selectedCategory, tab, now]);
 
   return (
     <Layout>
@@ -36,16 +38,14 @@ const Events = () => {
             <Button variant={tab === "upcoming" ? "default" : "outline"} size="sm" className="font-bold" onClick={() => setTab("upcoming")}>Upcoming</Button>
             <Button variant={tab === "past" ? "default" : "outline"} size="sm" className="font-bold" onClick={() => setTab("past")}>Past</Button>
           </div>
-
           <div className="mb-8 flex flex-wrap gap-2">
             {categories.map((cat) => (
-              <Button key={cat} variant={selectedCategory === cat ? "secondary" : "ghost"} size="sm" className="font-semibold" onClick={() => setSelectedCategory(cat)}>
-                {cat}
-              </Button>
+              <Button key={cat} variant={selectedCategory === cat ? "secondary" : "ghost"} size="sm" className="font-semibold" onClick={() => setSelectedCategory(cat)}>{cat}</Button>
             ))}
           </div>
-
-          {filtered.length === 0 ? (
+          {isLoading ? (
+            <p className="text-center text-muted-foreground font-medium py-20">Loading events...</p>
+          ) : filtered.length === 0 ? (
             <div className="py-20 text-center text-muted-foreground">
               <Calendar className="mx-auto mb-4 h-12 w-12 text-muted-foreground/30" />
               <p className="font-medium">No {tab} events found in this category.</p>
@@ -56,7 +56,7 @@ const Events = () => {
                 <motion.div key={event.id} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }}>
                   <Card className="overflow-hidden transition-shadow hover:shadow-md h-full">
                     <div className="h-40 overflow-hidden">
-                      <img src={event.image} alt={event.title} className="h-full w-full object-cover transition-transform duration-300 hover:scale-105" />
+                      <img src={event.image_url} alt={event.title} className="h-full w-full object-cover transition-transform duration-300 hover:scale-105" />
                     </div>
                     <CardContent className="p-5">
                       <span className="mb-2 inline-block rounded-full bg-secondary/10 px-2.5 py-0.5 text-xs font-bold text-secondary">{event.category}</span>

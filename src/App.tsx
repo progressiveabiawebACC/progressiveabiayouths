@@ -44,6 +44,8 @@ const App = () => (
             <Route path="/register" element={<Register />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/blog" element={<Blog />} />
+            <Route path="/blog/:id" element={<BlogPost />} />
+            <Route path="/events/:id" element={<EventDetail />} />
             <Route path="/admin/login" element={<AdminLogin />} />
             <Route path="/admin" element={<AdminDashboard />} />
             <Route path="/admin/hero-slides" element={<AdminHeroSlides />} />

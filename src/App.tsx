@@ -11,6 +11,8 @@ import Portfolio from "./pages/Portfolio";
 import Register from "./pages/Register";
 import Contact from "./pages/Contact";
 import Blog from "./pages/Blog";
+import BlogPost from "./pages/BlogPost";
+import EventDetail from "./pages/EventDetail";
 import NotFound from "./pages/NotFound";
 import AdminLogin from "./pages/AdminLogin";
 import AdminDashboard from "./pages/AdminDashboard";

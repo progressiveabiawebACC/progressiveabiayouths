@@ -1,6 +1,7 @@
 import { useState, useMemo } from "react";
 import { motion } from "framer-motion";
 import { Calendar, Clock, MapPin } from "lucide-react";
+import { Link } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Layout from "@/components/Layout";
@@ -55,12 +56,16 @@ const Events = () => {
               {filtered.map((event, i) => (
                 <motion.div key={event.id} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }}>
                   <Card className="overflow-hidden transition-shadow hover:shadow-md h-full">
-                    <div className="h-40 overflow-hidden">
-                      <img src={event.image_url} alt={event.title} className="h-full w-full object-cover transition-transform duration-300 hover:scale-105" />
-                    </div>
+                    <Link to={`/events/${event.id}`}>
+                      <div className="h-40 overflow-hidden">
+                        <img src={event.image_url} alt={event.title} className="h-full w-full object-cover transition-transform duration-300 hover:scale-105" />
+                      </div>
+                    </Link>
                     <CardContent className="p-5">
                       <span className="mb-2 inline-block rounded-full bg-secondary/10 px-2.5 py-0.5 text-xs font-bold text-secondary">{event.category}</span>
-                      <h3 className="mb-2 font-sans text-base font-bold text-foreground">{event.title}</h3>
+                      <Link to={`/events/${event.id}`}>
+                        <h3 className="mb-2 font-sans text-base font-bold text-foreground hover:text-primary transition-colors">{event.title}</h3>
+                      </Link>
                       <p className="mb-4 text-sm font-medium text-muted-foreground line-clamp-2">{event.description}</p>
                       <div className="space-y-1.5 text-xs font-medium text-muted-foreground">
                         <div className="flex items-center gap-2"><Calendar className="h-3.5 w-3.5" />{new Date(event.date).toLocaleDateString("en-NG", { weekday: "short", day: "numeric", month: "short", year: "numeric" })}</div>

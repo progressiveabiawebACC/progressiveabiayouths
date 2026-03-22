@@ -1,6 +1,7 @@
 import { useState, useMemo } from "react";
 import { motion } from "framer-motion";
 import { Search, BookOpen, ArrowRight } from "lucide-react";
+import { Link } from "react-router-dom";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -72,7 +73,7 @@ const Blog = () => {
                             <p className="mb-3 text-sm font-medium text-muted-foreground line-clamp-2">{post.excerpt}</p>
                             <div className="flex items-center justify-between">
                               <span className="text-xs font-medium text-muted-foreground">By {post.author} · {new Date(post.date).toLocaleDateString("en-NG", { day: "numeric", month: "short", year: "numeric" })}</span>
-                              <Button variant="ghost" size="sm" className="font-bold text-primary">Read More <ArrowRight className="ml-1 h-3 w-3" /></Button>
+                              <Link to={`/blog/${post.id}`}><Button variant="ghost" size="sm" className="font-bold text-primary">Read More <ArrowRight className="ml-1 h-3 w-3" /></Button></Link>
                             </div>
                           </CardContent>
                         </div>

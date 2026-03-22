@@ -96,12 +96,25 @@ const Index = () => {
   const { data: postsData } = useBlogPosts();
   const { data: portfolioData } = usePortfolioItems();
   const { data: partnersData } = usePartners();
+  const [partnersIndex, setPartnersIndex] = useState(0);
+  const partnersRef = useRef<HTMLDivElement>(null);
+  const [partnersPerPage, setPartnersPerPage] = useState(4);
 
   const stats = statsData ?? [];
   const events = eventsData ?? [];
   const blogPosts = postsData ?? [];
   const portfolioItems = portfolioData ?? [];
   const partnersList = partnersData ?? [];
+
+  useEffect(() => {
+    const updatePerPage = () => {
+      const w = window.innerWidth;
+      setPartnersPerPage(w < 640 ? 2 : w < 1024 ? 3 : 4);
+    };
+    updatePerPage();
+    window.addEventListener("resize", updatePerPage);
+    return () => window.removeEventListener("resize", updatePerPage);
+  }, []);
 
   return (
     <Layout>
@@ -270,17 +283,52 @@ const Index = () => {
         </motion.section>
       )}
 
-      {/* Partners */}
+      {/* Partners Slider */}
       {partnersList.length > 0 && (
-        <motion.section {...fadeIn} className="py-14">
+        <motion.section {...fadeIn} className="py-14 overflow-hidden">
           <div className="container">
             <h2 className="mb-8 text-center font-display text-xl font-extrabold text-foreground sm:text-2xl">Our Partners</h2>
-            <div className="flex flex-wrap items-center justify-center gap-6">
-              {partnersList.map((partner) => (
-                <div key={partner.id} className="flex h-20 w-36 items-center justify-center rounded-lg bg-white p-3 shadow-sm border border-border/30">
-                  <img src={partner.logo_url} alt={partner.name} className="max-h-full max-w-full object-contain" />
+            <div className="relative">
+              <div className="overflow-hidden" ref={partnersRef}>
+                <motion.div
+                  className="flex"
+                  animate={{ x: `-${partnersIndex * 100}%` }}
+                  transition={{ duration: 0.5, ease: "easeInOut" }}
+                >
+                  {Array.from({ length: Math.ceil(partnersList.length / partnersPerPage) }).map((_, pageIdx) => (
+                    <div key={pageIdx} className="flex min-w-full items-center justify-center gap-6 px-2">
+                      {partnersList.slice(pageIdx * partnersPerPage, (pageIdx + 1) * partnersPerPage).map((partner) => (
+                        <a
+                          key={partner.id}
+                          href={partner.website_url || "#"}
+                          target={partner.website_url ? "_blank" : undefined}
+                          rel="noopener noreferrer"
+                          className="flex h-20 w-28 sm:w-36 shrink-0 items-center justify-center rounded-lg bg-white p-3 shadow-sm border border-border/30 transition-shadow hover:shadow-md"
+                        >
+                          <img src={partner.logo_url} alt={partner.name} className="max-h-full max-w-full object-contain" />
+                        </a>
+                      ))}
+                    </div>
+                  ))}
+                </motion.div>
+              </div>
+              {Math.ceil(partnersList.length / partnersPerPage) > 1 && (
+                <>
+                  <button onClick={() => setPartnersIndex((i) => Math.max(0, i - 1))} disabled={partnersIndex === 0} className="absolute -left-2 top-1/2 z-10 -translate-y-1/2 rounded-full bg-primary/10 p-2 text-primary transition hover:bg-primary/20 disabled:opacity-30">
+                    <ChevronLeft className="h-5 w-5" />
+                  </button>
+                  <button onClick={() => setPartnersIndex((i) => Math.min(Math.ceil(partnersList.length / partnersPerPage) - 1, i + 1))} disabled={partnersIndex >= Math.ceil(partnersList.length / partnersPerPage) - 1} className="absolute -right-2 top-1/2 z-10 -translate-y-1/2 rounded-full bg-primary/10 p-2 text-primary transition hover:bg-primary/20 disabled:opacity-30">
+                    <ChevronRight className="h-5 w-5" />
+                  </button>
+                </>
+              )}
+              {Math.ceil(partnersList.length / partnersPerPage) > 1 && (
+                <div className="mt-4 flex justify-center gap-2">
+                  {Array.from({ length: Math.ceil(partnersList.length / partnersPerPage) }).map((_, i) => (
+                    <button key={i} onClick={() => setPartnersIndex(i)} className={`h-2 rounded-full transition-all ${i === partnersIndex ? "w-6 bg-primary" : "w-2 bg-primary/30"}`} />
+                  ))}
                 </div>
-              ))}
+              )}
             </div>
           </div>
         </motion.section>

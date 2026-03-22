@@ -96,12 +96,25 @@ const Index = () => {
   const { data: postsData } = useBlogPosts();
   const { data: portfolioData } = usePortfolioItems();
   const { data: partnersData } = usePartners();
+  const [partnersIndex, setPartnersIndex] = useState(0);
+  const partnersRef = useRef<HTMLDivElement>(null);
+  const [partnersPerPage, setPartnersPerPage] = useState(4);
 
   const stats = statsData ?? [];
   const events = eventsData ?? [];
   const blogPosts = postsData ?? [];
   const portfolioItems = portfolioData ?? [];
   const partnersList = partnersData ?? [];
+
+  useEffect(() => {
+    const updatePerPage = () => {
+      const w = window.innerWidth;
+      setPartnersPerPage(w < 640 ? 2 : w < 1024 ? 3 : 4);
+    };
+    updatePerPage();
+    window.addEventListener("resize", updatePerPage);
+    return () => window.removeEventListener("resize", updatePerPage);
+  }, []);
 
   return (
     <Layout>

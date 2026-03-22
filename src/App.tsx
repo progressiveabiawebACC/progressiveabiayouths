@@ -22,6 +22,7 @@ import AdminPartners from "./pages/admin/AdminPartners";
 import AdminTeam from "./pages/admin/AdminTeam";
 import AdminLgaCoordinators from "./pages/admin/AdminLgaCoordinators";
 import AdminStats from "./pages/admin/AdminStats";
+import ScrollToTop from "./components/ScrollToTop";
 
 const queryClient = new QueryClient();
 
@@ -32,6 +33,7 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
+          <ScrollToTop />
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/about" element={<About />} />

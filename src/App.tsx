@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import ErrorBoundary from "./components/ErrorBoundary";
 import { AuthProvider } from "@/hooks/useAuth";
 import Index from "./pages/Index";
 import About from "./pages/About";
@@ -29,39 +30,41 @@ import ScrollToTop from "./components/ScrollToTop";
 const queryClient = new QueryClient();
 
 const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <AuthProvider>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <ScrollToTop />
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/events" element={<Events />} />
-            <Route path="/portfolio" element={<Portfolio />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/blog" element={<Blog />} />
-            <Route path="/blog/:id" element={<BlogPost />} />
-            <Route path="/events/:id" element={<EventDetail />} />
-            <Route path="/admin/login" element={<AdminLogin />} />
-            <Route path="/admin" element={<AdminDashboard />} />
-            <Route path="/admin/hero-slides" element={<AdminHeroSlides />} />
-            <Route path="/admin/events" element={<AdminEvents />} />
-            <Route path="/admin/blog-posts" element={<AdminBlogPosts />} />
-            <Route path="/admin/portfolio" element={<AdminPortfolio />} />
-            <Route path="/admin/partners" element={<AdminPartners />} />
-            <Route path="/admin/team" element={<AdminTeam />} />
-            <Route path="/admin/lga-coordinators" element={<AdminLgaCoordinators />} />
-            <Route path="/admin/stats" element={<AdminStats />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
-      </TooltipProvider>
-    </AuthProvider>
-  </QueryClientProvider>
+  <ErrorBoundary>
+    <QueryClientProvider client={queryClient}>
+      <AuthProvider>
+        <TooltipProvider>
+          <Toaster />
+          <Sonner />
+          <BrowserRouter>
+            <ScrollToTop />
+            <Routes>
+              <Route path="/" element={<Index />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/events" element={<Events />} />
+              <Route path="/portfolio" element={<Portfolio />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/blog" element={<Blog />} />
+              <Route path="/blog/:id" element={<BlogPost />} />
+              <Route path="/events/:id" element={<EventDetail />} />
+              <Route path="/admin/login" element={<AdminLogin />} />
+              <Route path="/admin" element={<AdminDashboard />} />
+              <Route path="/admin/hero-slides" element={<AdminHeroSlides />} />
+              <Route path="/admin/events" element={<AdminEvents />} />
+              <Route path="/admin/blog-posts" element={<AdminBlogPosts />} />
+              <Route path="/admin/portfolio" element={<AdminPortfolio />} />
+              <Route path="/admin/partners" element={<AdminPartners />} />
+              <Route path="/admin/team" element={<AdminTeam />} />
+              <Route path="/admin/lga-coordinators" element={<AdminLgaCoordinators />} />
+              <Route path="/admin/stats" element={<AdminStats />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </BrowserRouter>
+        </TooltipProvider>
+      </AuthProvider>
+    </QueryClientProvider>
+  </ErrorBoundary>
 );
 
 export default App;

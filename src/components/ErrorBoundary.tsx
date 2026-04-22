@@ -72,7 +72,7 @@ class ErrorBoundary extends Component<Props, State> {
             </Button>
           </div>
 
-          {process.env.NODE_MODEL !== "production" && this.state.error && (
+          {(import.meta as any).env?.MODE !== "production" && this.state.error && (
             <div className="mt-12 max-w-2xl overflow-hidden rounded-xl border bg-muted/50 p-6 text-left">
               <p className="mb-2 font-mono text-sm font-bold text-destructive">
                 Error details:
@@ -86,7 +86,7 @@ class ErrorBoundary extends Component<Props, State> {
       );
     }
 
-    return this.children;
+    return this.props.children;
   }
 }
 

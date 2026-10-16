@@ -1,37 +1,46 @@
 import { Link } from "react-router-dom";
-import { Mail, Phone, MapPin, Facebook, Twitter, Instagram, Youtube } from "lucide-react";
+import { Mail, Phone, MapPin, Facebook, Twitter, Instagram, Youtube, Heart } from "lucide-react";
 import { contactInfo } from "@/data/siteData";
 
 const Footer = () => {
   return (
-    <footer className="bg-primary text-primary-foreground">
-      <div className="container py-12">
-        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+    <footer className="bg-slate-950 text-white border-t border-slate-900 transition-colors">
+      <div className="container py-14">
+        <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-4">
           {/* Brand */}
           <div className="space-y-4">
-            <Link to="/" className="flex items-center gap-2">
-              <img src="/progressive-logo.png" alt="Progressive Abia Youths" className="h-10 w-auto rounded bg-primary-foreground/10 p-1" />
-              <span className="font-display text-lg font-bold">PAY</span>
+            <Link to="/" className="flex items-center gap-2.5 group">
+              <img
+                src="/progressive-logo.png"
+                alt="Progressive Abia Youths logo"
+                className="h-10 w-auto rounded bg-white/10 p-1 transition-transform group-hover:scale-105"
+              />
+              <span className="font-display text-lg font-bold tracking-tight text-white">
+                Progressive Abia Youths
+              </span>
             </Link>
-            <p className="text-sm text-primary-foreground/80 leading-relaxed">
-              Raising unconventional youths for a progressive Abia State. Join us in building a better future.
+            <p className="text-base text-slate-300 leading-relaxed max-w-sm">
+              Raising unconventional youths for a progressive Abia State. Inspiring democratic engagement, transparency, and grassroots development.
             </p>
           </div>
 
           {/* Quick Links */}
           <div>
-            <h3 className="mb-4 font-display text-base font-semibold">Quick Links</h3>
-            <ul className="space-y-2 text-sm">
+            <h3 className="mb-4 font-display text-lg font-bold text-white tracking-wide">Quick Links</h3>
+            <ul className="space-y-3 text-base">
               {[
                 { label: "About Us", path: "/about" },
-                { label: "Events", path: "/events" },
-                { label: "Portfolio", path: "/portfolio" },
-                { label: "Blog", path: "/blog" },
-                { label: "Register", path: "/register" },
-                { label: "Contact", path: "/contact" },
+                { label: "Events & Rallies", path: "/events" },
+                { label: "Projects & Portfolio", path: "/portfolio" },
+                { label: "Articles & Blog", path: "/blog" },
+                { label: "Membership Registration", path: "/register" },
+                { label: "Contact Us", path: "/contact" },
               ].map((link) => (
                 <li key={link.path}>
-                  <Link to={link.path} className="text-primary-foreground/80 transition-colors hover:text-primary-foreground">
+                  <Link
+                    to={link.path}
+                    className="text-slate-300 transition-colors hover:text-white hover:underline underline-offset-4"
+                  >
                     {link.label}
                   </Link>
                 </li>
@@ -41,45 +50,84 @@ const Footer = () => {
 
           {/* Contact */}
           <div>
-            <h3 className="mb-4 font-display text-base font-semibold">Contact Us</h3>
-            <ul className="space-y-3 text-sm text-primary-foreground/80">
-              <li className="flex items-start gap-2">
-                <MapPin className="mt-0.5 h-4 w-4 shrink-0" />
-                {contactInfo.address}
+            <h3 className="mb-4 font-display text-lg font-bold text-white tracking-wide">State Office</h3>
+            <ul className="space-y-4 text-base text-slate-300">
+              <li className="flex items-start gap-3">
+                <MapPin className="mt-1 h-5 w-5 shrink-0 text-secondary" />
+                <span className="leading-snug">{contactInfo.address}</span>
               </li>
-              <li className="flex items-center gap-2">
-                <Phone className="h-4 w-4 shrink-0" />
-                <a href={`tel:${contactInfo.phone}`} className="hover:text-primary-foreground">{contactInfo.phone}</a>
+              <li className="flex items-center gap-3">
+                <Phone className="h-5 w-5 shrink-0 text-secondary" />
+                <a href={`tel:${contactInfo.phone}`} className="hover:text-white transition-colors">
+                  {contactInfo.phone}
+                </a>
               </li>
-              <li className="flex items-center gap-2">
-                <Mail className="h-4 w-4 shrink-0" />
-                <a href={`mailto:${contactInfo.email}`} className="hover:text-primary-foreground">{contactInfo.email}</a>
+              <li className="flex items-center gap-3">
+                <Mail className="h-5 w-5 shrink-0 text-secondary" />
+                <a href={`mailto:${contactInfo.email}`} className="hover:text-white transition-colors">
+                  {contactInfo.email}
+                </a>
               </li>
             </ul>
           </div>
 
           {/* Social */}
           <div>
-            <h3 className="mb-4 font-display text-base font-semibold">Follow Us</h3>
-            <div className="flex gap-3">
-              <a href={contactInfo.socialLinks.facebook} target="_blank" rel="noopener noreferrer" className="flex h-9 w-9 items-center justify-center rounded-full bg-primary-foreground/10 transition-colors hover:bg-primary-foreground/20">
+            <h3 className="mb-4 font-display text-base font-bold text-white tracking-wide">Follow Our Movement</h3>
+            <p className="text-xs text-slate-400 mb-3">Stay connected with our activities across social media:</p>
+            <div className="flex gap-2.5">
+              <a
+                href={contactInfo.socialLinks.facebook}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Facebook page"
+                className="flex h-10 w-10 items-center justify-center rounded-lg bg-white/10 text-white transition hover:bg-primary hover:scale-105"
+              >
                 <Facebook className="h-4 w-4" />
               </a>
-              <a href={contactInfo.socialLinks.twitter} target="_blank" rel="noopener noreferrer" className="flex h-9 w-9 items-center justify-center rounded-full bg-primary-foreground/10 transition-colors hover:bg-primary-foreground/20">
+              <a
+                href={contactInfo.socialLinks.twitter}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Twitter X profile"
+                className="flex h-10 w-10 items-center justify-center rounded-lg bg-white/10 text-white transition hover:bg-primary hover:scale-105"
+              >
                 <Twitter className="h-4 w-4" />
               </a>
-              <a href={contactInfo.socialLinks.instagram} target="_blank" rel="noopener noreferrer" className="flex h-9 w-9 items-center justify-center rounded-full bg-primary-foreground/10 transition-colors hover:bg-primary-foreground/20">
+              <a
+                href={contactInfo.socialLinks.instagram}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Instagram profile"
+                className="flex h-10 w-10 items-center justify-center rounded-lg bg-white/10 text-white transition hover:bg-primary hover:scale-105"
+              >
                 <Instagram className="h-4 w-4" />
               </a>
-              <a href={contactInfo.socialLinks.youtube} target="_blank" rel="noopener noreferrer" className="flex h-9 w-9 items-center justify-center rounded-full bg-primary-foreground/10 transition-colors hover:bg-primary-foreground/20">
+              <a
+                href={contactInfo.socialLinks.youtube}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="YouTube channel"
+                className="flex h-10 w-10 items-center justify-center rounded-lg bg-white/10 text-white transition hover:bg-primary hover:scale-105"
+              >
                 <Youtube className="h-4 w-4" />
               </a>
+            </div>
+            <div className="mt-5 text-xs text-slate-400">
+              <Link to="/admin/login" className="hover:text-slate-200 transition-colors">
+                Staff & Admin Portal →
+              </Link>
             </div>
           </div>
         </div>
 
-        <div className="mt-10 border-t border-primary-foreground/20 pt-6 text-center text-sm text-primary-foreground/60">
-          © {new Date().getFullYear()} Progressive Abia Youths. All rights reserved.
+        <div className="mt-12 border-t border-slate-900 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-400">
+          <div>
+            © {new Date().getFullYear()} Progressive Abia Youths (PAY). All rights reserved.
+          </div>
+          <div className="flex items-center gap-1">
+            Dedicated to the youth & future of Abia State <Heart className="h-3 w-3 text-red-500 fill-current inline ml-1" />
+          </div>
         </div>
       </div>
     </footer>

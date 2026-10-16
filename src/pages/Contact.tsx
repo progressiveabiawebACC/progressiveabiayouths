@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Mail, Phone, MapPin, Send, Facebook, Twitter, Instagram, Youtube } from "lucide-react";
+import { Mail, Phone, MapPin, Send, Facebook, Twitter, Instagram, Youtube, MessageCircle, Clock, CheckCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -20,24 +20,32 @@ const Contact = () => {
   const { toast } = useToast();
   const [form, setForm] = useState({ name: "", email: "", subject: "", message: "" });
   const [sending, setSending] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+
+  const cleanPhone = contactInfo.phone.replace(/[^0-9]/g, "");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (!form.name || !form.email || !form.message) {
+      toast({ title: "Please fill out all required fields", variant: "destructive" });
+      return;
+    }
     setSending(true);
     setTimeout(() => {
-      toast({ title: "Message sent!", description: "We'll get back to you soon." });
-      setForm({ name: "", email: "", subject: "", message: "" });
+      setSubmitted(true);
+      toast({ title: "Message sent successfully!", description: "A secretariat representative will reply within 24 hours." });
       setSending(false);
-    }, 1000);
+    }, 900);
   };
 
   return (
     <Layout>
-      <section className="bg-primary py-16 sm:py-20">
-        <div className="container text-center">
-          <h1 className="font-display text-3xl font-extrabold text-white sm:text-4xl md:text-5xl">Contact Us</h1>
-          <p className="mx-auto mt-4 max-w-2xl text-base font-medium text-white/85">
-            Have a question or want to collaborate? Reach out to us.
+      <section className="bg-primary py-16 sm:py-20 text-white relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-primary via-primary/95 to-secondary/85" />
+        <div className="container relative text-center">
+          <h1 className="font-display text-3xl font-extrabold sm:text-4xl md:text-5xl">Connect With Us</h1>
+          <p className="mx-auto mt-4 max-w-2xl text-base font-medium text-white/90">
+            Have questions, partnership inquiries, or community proposals? We are here to listen and collaborate.
           </p>
         </div>
       </section>
@@ -45,57 +53,219 @@ const Contact = () => {
       <section className="py-12">
         <div className="container">
           <div className="grid gap-8 lg:grid-cols-3">
+            {/* Contact Details & WhatsApp Banner */}
             <motion.div {...fadeIn} className="space-y-4">
-              <Card>
-                <CardContent className="flex items-start gap-3 p-5">
-                  <MapPin className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
+              {/* WhatsApp Fast Channel */}
+              <div className="rounded-2xl border border-[#25D366]/40 bg-[#25D366]/10 p-6 space-y-3.5 shadow-sm">
+                <div className="flex items-center gap-3 text-foreground font-bold text-base">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#25D366] text-white">
+                    <MessageCircle className="h-5 w-5 fill-current" />
+                  </div>
+                  <span>Instant WhatsApp Response</span>
+                </div>
+                <p className="text-sm font-normal text-foreground/80 leading-relaxed">
+                  For rapid feedback, volunteer inquiries, or urgent questions, chat directly with our Abia State secretariat.
+                </p>
+                <Button asChild size="default" className="w-full bg-[#25D366] hover:bg-[#20ba5a] text-white font-bold shadow-xs">
+                  <a
+                    href={`https://wa.me/${cleanPhone}?text=${encodeURIComponent("Hello Progressive Abia Youths! I have an inquiry.")}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Open WhatsApp Chat
+                  </a>
+                </Button>
+              </div>
+
+              {/* Physical Address */}
+              <Card className="border border-border/80 shadow-sm bg-card">
+                <CardContent className="flex items-start gap-4 p-6">
+                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                    <MapPin className="h-5 w-5" />
+                  </div>
                   <div>
-                    <h3 className="font-sans text-sm font-bold text-foreground">Address</h3>
-                    <p className="text-sm font-medium text-muted-foreground">{contactInfo.address}</p>
+                    <h3 className="font-display text-base sm:text-lg font-bold text-foreground">State Secretariat</h3>
+                    <p className="text-sm sm:text-base font-normal text-foreground/80 mt-1 leading-relaxed">{contactInfo.address}</p>
                   </div>
                 </CardContent>
               </Card>
-              <Card>
-                <CardContent className="flex items-start gap-3 p-5">
-                  <Phone className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
+
+              {/* Phone */}
+              <Card className="border border-border/80 shadow-sm bg-card">
+                <CardContent className="flex items-start gap-4 p-6">
+                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                    <Phone className="h-5 w-5" />
+                  </div>
                   <div>
-                    <h3 className="font-sans text-sm font-bold text-foreground">Phone</h3>
-                    <a href={`tel:${contactInfo.phone}`} className="text-sm font-medium text-muted-foreground hover:text-primary">{contactInfo.phone}</a>
+                    <h3 className="font-display text-base sm:text-lg font-bold text-foreground">Phone Lines</h3>
+                    <a href={`tel:${contactInfo.phone}`} className="text-base font-bold text-primary hover:underline block mt-1">
+                      {contactInfo.phone}
+                    </a>
+                    <span className="text-xs sm:text-sm font-semibold text-foreground/75 flex items-center gap-1.5 mt-1.5">
+                      <Clock className="h-4 w-4 text-secondary" /> Mon – Sat, 9:00 AM – 5:00 PM
+                    </span>
                   </div>
                 </CardContent>
               </Card>
-              <Card>
-                <CardContent className="flex items-start gap-3 p-5">
-                  <Mail className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
+
+              {/* Email */}
+              <Card className="border border-border/80 shadow-sm bg-card">
+                <CardContent className="flex items-start gap-4 p-6">
+                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                    <Mail className="h-5 w-5" />
+                  </div>
                   <div>
-                    <h3 className="font-sans text-sm font-bold text-foreground">Email</h3>
-                    <a href={`mailto:${contactInfo.email}`} className="text-sm font-medium text-muted-foreground hover:text-primary">{contactInfo.email}</a>
+                    <h3 className="font-display text-base sm:text-lg font-bold text-foreground">Official Email</h3>
+                    <a href={`mailto:${contactInfo.email}`} className="text-base font-bold text-primary hover:underline block mt-1">
+                      {contactInfo.email}
+                    </a>
                   </div>
                 </CardContent>
               </Card>
-              <div className="flex gap-3 pt-2">
-                <a href={contactInfo.socialLinks.facebook} target="_blank" rel="noopener noreferrer" className="flex h-9 w-9 items-center justify-center rounded-full bg-primary/10 text-primary transition hover:bg-primary/20"><Facebook className="h-4 w-4" /></a>
-                <a href={contactInfo.socialLinks.twitter} target="_blank" rel="noopener noreferrer" className="flex h-9 w-9 items-center justify-center rounded-full bg-primary/10 text-primary transition hover:bg-primary/20"><Twitter className="h-4 w-4" /></a>
-                <a href={contactInfo.socialLinks.instagram} target="_blank" rel="noopener noreferrer" className="flex h-9 w-9 items-center justify-center rounded-full bg-primary/10 text-primary transition hover:bg-primary/20"><Instagram className="h-4 w-4" /></a>
-                <a href={contactInfo.socialLinks.youtube} target="_blank" rel="noopener noreferrer" className="flex h-9 w-9 items-center justify-center rounded-full bg-primary/10 text-primary transition hover:bg-primary/20"><Youtube className="h-4 w-4" /></a>
+
+              {/* Social Channels */}
+              <div className="pt-2">
+                <p className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-2.5">Follow Our Channels</p>
+                <div className="flex gap-2.5">
+                  <a
+                    href={contactInfo.socialLinks.facebook}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Facebook page"
+                    className="flex h-10 w-10 items-center justify-center rounded-lg border border-border/80 bg-card text-foreground/80 transition hover:bg-primary hover:text-white hover:border-primary shadow-xs"
+                  >
+                    <Facebook className="h-4 w-4" />
+                  </a>
+                  <a
+                    href={contactInfo.socialLinks.twitter}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Twitter X profile"
+                    className="flex h-10 w-10 items-center justify-center rounded-lg border border-border/80 bg-card text-foreground/80 transition hover:bg-primary hover:text-white hover:border-primary shadow-xs"
+                  >
+                    <Twitter className="h-4 w-4" />
+                  </a>
+                  <a
+                    href={contactInfo.socialLinks.instagram}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Instagram profile"
+                    className="flex h-10 w-10 items-center justify-center rounded-lg border border-border/80 bg-card text-foreground/80 transition hover:bg-primary hover:text-white hover:border-primary shadow-xs"
+                  >
+                    <Instagram className="h-4 w-4" />
+                  </a>
+                  <a
+                    href={contactInfo.socialLinks.youtube}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="YouTube channel"
+                    className="flex h-10 w-10 items-center justify-center rounded-lg border border-border/80 bg-card text-foreground/80 transition hover:bg-primary hover:text-white hover:border-primary shadow-xs"
+                  >
+                    <Youtube className="h-4 w-4" />
+                  </a>
+                </div>
               </div>
             </motion.div>
 
+            {/* Contact Form */}
             <motion.div {...fadeIn} transition={{ delay: 0.1 }} className="lg:col-span-2">
-              <Card>
-                <CardContent className="p-6">
-                  <h2 className="mb-6 font-display text-xl font-extrabold text-foreground">Send us a Message</h2>
-                  <form onSubmit={handleSubmit} className="space-y-4">
-                    <div className="grid gap-4 sm:grid-cols-2">
-                      <Input placeholder="Your Name" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} required />
-                      <Input type="email" placeholder="Your Email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} required />
+              <Card className="border border-border/80 shadow-xs">
+                <CardContent className="p-6 sm:p-8">
+                  {submitted ? (
+                    <div className="py-12 text-center space-y-4">
+                      <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-secondary/15 text-secondary">
+                        <CheckCircle className="h-8 w-8" />
+                      </div>
+                      <h3 className="font-display text-2xl font-bold text-foreground">Message Dispatched!</h3>
+                      <p className="text-sm font-medium text-muted-foreground max-w-md mx-auto leading-relaxed">
+                        Thank you for reaching out. Your inquiry has been routed to the appropriate officer at our secretariat.
+                      </p>
+                      <Button
+                        variant="outline"
+                        className="font-bold mt-2"
+                        onClick={() => {
+                          setSubmitted(false);
+                          setForm({ name: "", email: "", subject: "", message: "" });
+                        }}
+                      >
+                        Send Another Note
+                      </Button>
                     </div>
-                    <Input placeholder="Subject" value={form.subject} onChange={(e) => setForm({ ...form, subject: e.target.value })} required />
-                    <Textarea placeholder="Your Message" rows={5} value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} required />
-                    <Button type="submit" disabled={sending} className="w-full font-bold sm:w-auto">
-                      <Send className="mr-2 h-4 w-4" /> {sending ? "Sending..." : "Send Message"}
-                    </Button>
-                  </form>
+                  ) : (
+                    <>
+                      <div className="mb-6">
+                        <h2 className="font-display text-xl sm:text-2xl font-extrabold text-foreground">Send Us a Direct Message</h2>
+                        <p className="text-xs sm:text-sm text-muted-foreground mt-1">We respond to all verified community and partnership requests.</p>
+                      </div>
+
+                      <form onSubmit={handleSubmit} className="space-y-4">
+                        <div className="grid gap-4 sm:grid-cols-2">
+                          <div>
+                            <label className="block text-xs font-bold text-foreground mb-1.5">
+                              Your Full Name <span className="text-destructive">*</span>
+                            </label>
+                            <Input
+                              placeholder="e.g. Chinedu Okoro"
+                              value={form.name}
+                              onChange={(e) => setForm({ ...form, name: e.target.value })}
+                              required
+                              className="h-10 text-sm"
+                            />
+                          </div>
+
+                          <div>
+                            <label className="block text-xs font-bold text-foreground mb-1.5">
+                              Email Address <span className="text-destructive">*</span>
+                            </label>
+                            <Input
+                              type="email"
+                              placeholder="e.g. chinedu@example.com"
+                              value={form.email}
+                              onChange={(e) => setForm({ ...form, email: e.target.value })}
+                              required
+                              className="h-10 text-sm"
+                            />
+                          </div>
+                        </div>
+
+                        <div>
+                          <label className="block text-xs font-bold text-foreground mb-1.5">
+                            Subject / Purpose
+                          </label>
+                          <Input
+                            placeholder="e.g. Partnership Proposal / Volunteer in Aba North"
+                            value={form.subject}
+                            onChange={(e) => setForm({ ...form, subject: e.target.value })}
+                            className="h-10 text-sm"
+                          />
+                        </div>
+
+                        <div>
+                          <div className="flex items-center justify-between mb-1.5">
+                            <label className="block text-xs font-bold text-foreground">
+                              Your Message <span className="text-destructive">*</span>
+                            </label>
+                            <span className="text-[11px] font-medium text-muted-foreground">
+                              {form.message.length} characters
+                            </span>
+                          </div>
+                          <Textarea
+                            placeholder="Please provide details about your inquiry, organization, or questions..."
+                            rows={5}
+                            value={form.message}
+                            onChange={(e) => setForm({ ...form, message: e.target.value })}
+                            required
+                            className="text-sm resize-none"
+                          />
+                        </div>
+
+                        <Button type="submit" disabled={sending} className="w-full sm:w-auto font-bold shadow-sm" size="lg">
+                          <Send className="mr-2 h-4 w-4" />
+                          {sending ? "Transmitting..." : "Send Message"}
+                        </Button>
+                      </form>
+                    </>
+                  )}
                 </CardContent>
               </Card>
             </motion.div>

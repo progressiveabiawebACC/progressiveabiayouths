@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Source+Sans+3:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,700;0,9..144,800;0,9..144,900;1,9..144,600;1,9..144,700;1,9..144,800&family=Inter:wght@300;400;500;600;700;800&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -7,82 +7,82 @@
 @layer base {
   :root {
     --background: 210 20% 98%;
-    --foreground: 215 30% 14%;
+    --foreground: 215 35% 10%;
 
     --card: 0 0% 100%;
-    --card-foreground: 215 30% 14%;
+    --card-foreground: 215 35% 10%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 215 30% 14%;
+    --popover-foreground: 215 35% 10%;
 
-    --primary: 214 72% 33%;
+    --primary: 214 75% 30%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 145 50% 28%;
+    --secondary: 145 55% 26%;
     --secondary-foreground: 0 0% 100%;
 
-    --muted: 210 20% 94%;
-    --muted-foreground: 215 14% 46%;
+    --muted: 210 20% 92%;
+    --muted-foreground: 215 25% 28%;
 
-    --accent: 36 90% 55%;
-    --accent-foreground: 215 30% 14%;
+    --accent: 36 95% 48%;
+    --accent-foreground: 215 35% 10%;
 
-    --destructive: 0 84% 60%;
+    --destructive: 0 84% 55%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 214 20% 88%;
-    --input: 214 20% 88%;
-    --ring: 214 72% 33%;
+    --border: 214 20% 84%;
+    --input: 214 20% 84%;
+    --ring: 214 75% 30%;
 
-    --radius: 0.5rem;
+    --radius: 0.625rem;
 
-    --sidebar-background: 0 0% 98%;
+    --sidebar-background: 0 0% 99%;
     --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 214 72% 33%;
-    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-primary: 214 75% 30%;
+    --sidebar-primary-foreground: 0 0% 100%;
     --sidebar-accent: 210 20% 94%;
     --sidebar-accent-foreground: 215 30% 14%;
-    --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 214 72% 33%;
+    --sidebar-border: 220 13% 90%;
+    --sidebar-ring: 214 75% 30%;
   }
 
   .dark {
-    --background: 215 30% 8%;
-    --foreground: 210 20% 95%;
+    --background: 215 32% 9%;
+    --foreground: 210 20% 96%;
 
-    --card: 215 30% 12%;
-    --card-foreground: 210 20% 95%;
+    --card: 215 28% 13%;
+    --card-foreground: 210 20% 96%;
 
-    --popover: 215 30% 12%;
-    --popover-foreground: 210 20% 95%;
+    --popover: 215 28% 13%;
+    --popover-foreground: 210 20% 96%;
 
-    --primary: 214 72% 50%;
-    --primary-foreground: 0 0% 100%;
+    --primary: 214 85% 58%;
+    --primary-foreground: 215 32% 9%;
 
-    --secondary: 145 45% 40%;
+    --secondary: 145 55% 42%;
     --secondary-foreground: 0 0% 100%;
 
     --muted: 215 25% 18%;
-    --muted-foreground: 215 14% 60%;
+    --muted-foreground: 215 15% 75%;
 
-    --accent: 36 90% 55%;
-    --accent-foreground: 215 30% 14%;
+    --accent: 36 95% 55%;
+    --accent-foreground: 215 30% 12%;
 
-    --destructive: 0 62.8% 30.6%;
+    --destructive: 0 72% 51%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 215 25% 20%;
-    --input: 215 25% 20%;
-    --ring: 214 72% 50%;
+    --border: 215 25% 22%;
+    --input: 215 25% 22%;
+    --ring: 214 85% 58%;
 
-    --sidebar-background: 215 30% 10%;
+    --sidebar-background: 215 30% 11%;
     --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 214 72% 50%;
-    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-primary: 214 85% 58%;
+    --sidebar-primary-foreground: 215 32% 9%;
     --sidebar-accent: 215 25% 18%;
     --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 215 25% 20%;
-    --sidebar-ring: 214 72% 50%;
+    --sidebar-border: 215 25% 22%;
+    --sidebar-ring: 214 85% 58%;
   }
 }
 
@@ -91,11 +91,80 @@
     @apply border-border;
   }
 
-  body {
-    @apply bg-background text-foreground font-sans;
+  html {
+    font-size: 18px; /* Comfortable base size */
   }
 
+  body {
+    @apply bg-background text-foreground antialiased selection:bg-primary/20 selection:text-primary;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-size: 1.0556rem;   /* ~19px */
+    line-height: 1.85;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    letter-spacing: -0.011em;
+  }
+
+  /* Display headings — Fraunces bold editorial serif (Reform Summit style) */
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 800;
+    line-height: 1.18;
+    letter-spacing: -0.025em;
+  }
+
+  h1 { font-size: clamp(2.4rem, 6vw, 4.2rem); }
+  h2 { font-size: clamp(1.85rem, 4.2vw, 2.9rem); }
+  h3 { font-size: clamp(1.45rem, 3.2vw, 2.15rem); }
+  h4 { font-size: 1.35rem; }
+  h5 { font-size: 1.18rem; }
+  h6 { font-size: 1.05rem; }
+
+  /* Body paragraphs — generous size, legible line height, authoritative presence */
+  p {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-size: 1.0556rem;   /* ~19px */
+    line-height: 1.85;
+    font-weight: 400;
+  }
+
+  li {
+    font-size: 1.0556rem;
+    line-height: 1.85;
+  }
+
+  /* Typography scale overrides ensuring no tiny unreadable text anywhere */
+  .text-xs   { font-size: 0.8889rem !important; line-height: 1.6 !important; }  /* ~16px */
+  .text-sm   { font-size: 0.9722rem !important; line-height: 1.65 !important; } /* ~17.5px */
+  .text-base { font-size: 1.0556rem !important; line-height: 1.85 !important; } /* ~19px */
+  .text-lg   { font-size: 1.2222rem !important; line-height: 1.75 !important; } /* ~22px */
+  .text-xl   { font-size: 1.3889rem !important; line-height: 1.65 !important; } /* ~25px */
+  .text-2xl  { font-size: 1.6667rem !important; line-height: 1.4 !important; }  /* ~30px */
+}
+
+@layer components {
+  /* Eyebrow / label style — like Reform Summit's tracked uppercase labels */
+  .eyebrow {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+  }
+
+  /* Large lead / intro paragraph */
+  .text-lead {
+    font-size: 1.25rem;
+    line-height: 1.8;
+    font-weight: 400;
+    color: hsl(var(--foreground) / 0.88);
+  }
+
+  /* Italic serif emphasis (Reform Summit hallmark) */
+  .font-serif-italic {
+    font-family: 'Fraunces', Georgia, serif;
+    font-style: italic;
+    font-weight: 600;
   }
 }
+

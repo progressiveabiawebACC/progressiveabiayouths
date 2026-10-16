@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronLeft, ChevronRight, ArrowRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, ArrowRight, Calendar, Clock, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import Layout from "@/components/Layout";
@@ -12,37 +12,84 @@ import { useHeroSlides, useEvents, useBlogPosts, usePortfolioItems, usePartners,
 const HeroSlider = () => {
   const { data: slides } = useHeroSlides();
   const [current, setCurrent] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
   const heroSlides = slides ?? [];
 
   useEffect(() => {
-    if (heroSlides.length === 0) return;
+    if (heroSlides.length === 0 || isPaused) return;
     const timer = setInterval(() => setCurrent((c) => (c + 1) % heroSlides.length), 6000);
     return () => clearInterval(timer);
-  }, [heroSlides.length]);
+  }, [heroSlides.length, isPaused]);
 
-  if (heroSlides.length === 0) return <section className="h-[80vh] min-h-[500px] bg-primary flex items-center justify-center"><p className="text-white font-bold text-xl">Loading...</p></section>;
+  if (heroSlides.length === 0) {
+    return (
+      <section className="h-[75vh] min-h-[480px] bg-primary/90 flex items-center justify-center">
+        <div className="flex flex-col items-center gap-3">
+          <div className="h-8 w-8 animate-spin rounded-full border-4 border-white border-t-transparent" />
+          <p className="text-white font-semibold text-lg">Loading experience...</p>
+        </div>
+      </section>
+    );
+  }
 
   const prev = () => setCurrent((c) => (c - 1 + heroSlides.length) % heroSlides.length);
   const next = () => setCurrent((c) => (c + 1) % heroSlides.length);
   const slide = heroSlides[current];
 
   return (
-    <section className="relative h-[80vh] min-h-[500px] overflow-hidden bg-foreground">
+    <section
+      className="relative h-[80vh] min-h-[520px] overflow-hidden bg-slate-950"
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
+      onTouchStart={() => setIsPaused(true)}
+      onTouchEnd={() => setIsPaused(false)}
+      aria-label="Featured Highlights Carousel"
+    >
       <AnimatePresence mode="wait">
-        <motion.div key={current} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.6 }} className="absolute inset-0 flex items-center">
-          <img src={slide.image_url} alt={slide.title} className="absolute inset-0 h-full w-full object-cover" />
-          <div className="absolute inset-0 bg-foreground/65" />
-          <div className="container relative z-10">
-            <motion.div initial={{ y: 30, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.2, duration: 0.6 }} className="max-w-2xl">
-              <h1 className="mb-4 font-display text-3xl font-extrabold leading-[1.1] text-white sm:text-4xl md:text-5xl lg:text-6xl" style={{ textWrap: "balance" }}>
+        <motion.div
+          key={current}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.6 }}
+          className="absolute inset-0 flex items-center"
+        >
+          <img
+            src={slide.image_url}
+            alt={slide.title}
+            className="absolute inset-0 h-full w-full object-cover scale-105 transition-transform duration-10000"
+          />
+          {/* Multi-stop protective scrim ensures >10:1 contrast everywhere */}
+          <div className="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-950/65 to-slate-950/40" />
+
+          <div className="container relative z-10 py-12">
+            <motion.div
+              initial={{ y: 24, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.15, duration: 0.5 }}
+              className="max-w-2xl"
+            >
+              <div className="inline-flex items-center gap-2 rounded-full bg-secondary/80 px-3 py-1 text-xs font-bold uppercase tracking-wider text-white backdrop-blur-md mb-4">
+                Abia Youth Movement
+              </div>
+              <h1
+                className="mb-4 font-display text-3xl font-extrabold leading-[1.15] text-white sm:text-4xl md:text-5xl lg:text-6xl drop-shadow-sm"
+                style={{ textWrap: "balance" }}
+              >
                 {slide.title}
               </h1>
-              <p className="mb-8 text-base font-medium text-white/90 sm:text-lg md:text-xl">{slide.subtitle}</p>
+              <p className="mb-8 text-base font-medium text-slate-100 sm:text-lg md:text-xl leading-relaxed max-w-xl">
+                {slide.subtitle}
+              </p>
               <div className="flex flex-wrap gap-3">
-                <Button asChild size="lg" className="bg-secondary text-white font-bold hover:bg-secondary/90">
+                <Button asChild size="lg" className="bg-secondary text-white font-bold hover:bg-secondary/90 shadow-md">
                   <Link to={slide.cta1_link}>{slide.cta1_label}</Link>
                 </Button>
-                <Button asChild size="lg" className="bg-white text-foreground font-bold hover:bg-white/90">
+                <Button
+                  asChild
+                  size="lg"
+                  className="bg-white/95 text-slate-900 font-bold hover:bg-white shadow-md border border-white/20 transition-all hover:scale-102"
+                >
                   <Link to={slide.cta2_link}>{slide.cta2_label}</Link>
                 </Button>
               </div>
@@ -50,11 +97,34 @@ const HeroSlider = () => {
           </div>
         </motion.div>
       </AnimatePresence>
-      <button onClick={prev} className="absolute left-4 top-1/2 z-10 -translate-y-1/2 rounded-full bg-white/15 p-2 text-white backdrop-blur transition hover:bg-white/25 active:scale-95"><ChevronLeft className="h-5 w-5" /></button>
-      <button onClick={next} className="absolute right-4 top-1/2 z-10 -translate-y-1/2 rounded-full bg-white/15 p-2 text-white backdrop-blur transition hover:bg-white/25 active:scale-95"><ChevronRight className="h-5 w-5" /></button>
-      <div className="absolute bottom-6 left-1/2 z-10 flex -translate-x-1/2 gap-2">
+
+      {/* Prev / Next controls with 44px minimum touch targets */}
+      <button
+        onClick={prev}
+        className="absolute left-4 top-1/2 z-10 -translate-y-1/2 flex h-11 w-11 items-center justify-center rounded-full bg-black/40 text-white backdrop-blur-md transition hover:bg-black/60 active:scale-95 border border-white/10"
+        aria-label="Previous slide"
+      >
+        <ChevronLeft className="h-6 w-6" />
+      </button>
+      <button
+        onClick={next}
+        className="absolute right-4 top-1/2 z-10 -translate-y-1/2 flex h-11 w-11 items-center justify-center rounded-full bg-black/40 text-white backdrop-blur-md transition hover:bg-black/60 active:scale-95 border border-white/10"
+        aria-label="Next slide"
+      >
+        <ChevronRight className="h-6 w-6" />
+      </button>
+
+      {/* Dot Indicators */}
+      <div className="absolute bottom-6 left-1/2 z-10 flex -translate-x-1/2 items-center gap-2.5 p-2 bg-black/30 backdrop-blur-sm rounded-full">
         {heroSlides.map((_, i) => (
-          <button key={i} onClick={() => setCurrent(i)} className={`h-2 rounded-full transition-all ${i === current ? "w-8 bg-white" : "w-2 bg-white/40"}`} />
+          <button
+            key={i}
+            onClick={() => setCurrent(i)}
+            aria-label={`Go to slide ${i + 1}`}
+            className={`h-2.5 rounded-full transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-white ${
+              i === current ? "w-8 bg-white" : "w-2.5 bg-white/40 hover:bg-white/70"
+            }`}
+          />
         ))}
       </div>
     </section>
@@ -121,32 +191,37 @@ const Index = () => {
       <HeroSlider />
 
       {/* About Summary */}
-      <motion.section {...fadeIn} className="py-16 sm:py-20">
+      <motion.section {...fadeIn} className="py-20 sm:py-24">
         <div className="container">
           <div className="mx-auto max-w-3xl text-center">
-            <h2 className="mb-4 font-display text-2xl font-extrabold text-foreground sm:text-3xl">About Progressive Abia Youths</h2>
-            <p className="mb-10 text-base font-medium text-muted-foreground leading-relaxed">
-              Progressive Abia Youths (PAY) is a youth-led advocacy organization committed to raising unconventional youths who will drive positive change, good governance, and sustainable development in Abia State, Nigeria.
+            <div className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-1 text-xs font-bold uppercase tracking-widest text-primary mb-4">
+              Our Identity
+            </div>
+            <h2 className="mb-5 font-display text-3xl font-extrabold text-foreground sm:text-4xl md:text-5xl">
+              About Progressive Abia Youths
+            </h2>
+            <p className="mb-12 text-lg sm:text-xl font-normal text-foreground/85 leading-relaxed max-w-2xl mx-auto">
+              Progressive Abia Youths (PAY) is a youth-led advocacy movement committed to raising <span className="font-serif-italic font-semibold text-primary">unconventional leaders</span> who will drive good governance, policy reform, and sustainable progress across Abia State.
             </p>
           </div>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {coreValues.map((val) => (
-              <Card key={val.name} className="border-border/50 transition-shadow hover:shadow-md">
-                <CardContent className="flex items-start gap-3 p-5">
-                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary/10">
-                    <CoreValueIcon icon={val.icon} className="h-4.5 w-4.5 text-primary" />
+              <Card key={val.name} className="border-border/80 transition-shadow hover:shadow-lg bg-card">
+                <CardContent className="flex items-start gap-4 p-6">
+                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                    <CoreValueIcon icon={val.icon} className="h-5 w-5" />
                   </div>
                   <div>
-                    <h3 className="font-sans text-sm font-bold text-foreground">{val.name}</h3>
-                    <p className="text-xs font-medium text-muted-foreground">{val.description}</p>
+                    <h3 className="font-display text-lg font-bold text-foreground mb-1">{val.name}</h3>
+                    <p className="text-sm sm:text-base font-normal text-foreground/80 leading-relaxed">{val.description}</p>
                   </div>
                 </CardContent>
               </Card>
             ))}
           </div>
-          <div className="mt-8 text-center">
-            <Button asChild variant="outline" className="font-bold">
-              <Link to="/about">Learn More About Us <ArrowRight className="ml-1 h-4 w-4" /></Link>
+          <div className="mt-10 text-center">
+            <Button asChild size="lg" variant="outline" className="font-bold border-primary/30 text-foreground hover:bg-primary hover:text-white">
+              <Link to="/about">Learn More About Our Mission <ArrowRight className="ml-1.5 h-4 w-4" /></Link>
             </Button>
           </div>
         </div>
@@ -154,13 +229,13 @@ const Index = () => {
 
       {/* Stats */}
       {stats.length > 0 && (
-        <motion.section {...fadeIn} className="border-y bg-muted/50 py-14">
+        <motion.section {...fadeIn} className="border-y bg-muted/40 py-16">
           <div className="container">
             <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
               {stats.map((stat) => (
                 <div key={stat.id} className="text-center">
                   <Counter value={stat.value} suffix={stat.suffix} />
-                  <p className="mt-1 text-sm font-bold text-muted-foreground">{stat.label}</p>
+                  <p className="mt-2 text-base font-bold text-foreground/85 uppercase tracking-wide">{stat.label}</p>
                 </div>
               ))}
             </div>
@@ -169,15 +244,15 @@ const Index = () => {
       )}
 
       {/* Founder */}
-      <motion.section {...fadeIn} className="py-16 sm:py-20">
+      <motion.section {...fadeIn} className="py-20 sm:py-24">
         <div className="container">
-          <div className="flex flex-col items-center gap-8 md:flex-row md:gap-12">
-            <img src={founder.image} alt={founder.name} className="h-48 w-48 shrink-0 rounded-full object-cover shadow-lg" />
+          <div className="flex flex-col items-center gap-8 md:flex-row md:gap-14 max-w-5xl mx-auto">
+            <img src={founder.image} alt={founder.name} className="h-56 w-56 shrink-0 rounded-2xl object-cover shadow-xl border-2 border-primary/20" />
             <div>
-              <p className="mb-1 text-sm font-bold uppercase tracking-wider text-secondary">Meet the Founder</p>
-              <h2 className="mb-2 font-display text-2xl font-extrabold text-foreground sm:text-3xl">{founder.name}</h2>
-              <p className="mb-1 text-sm font-bold text-primary">{founder.title}</p>
-              <p className="text-base font-medium text-muted-foreground leading-relaxed">{founder.bio}</p>
+              <p className="mb-2 text-xs font-bold uppercase tracking-widest text-secondary">Leadership</p>
+              <h2 className="mb-2 font-display text-3xl font-extrabold text-foreground sm:text-4xl">{founder.name}</h2>
+              <p className="mb-4 text-base sm:text-lg font-bold text-primary">{founder.title}</p>
+              <p className="text-lg sm:text-xl font-normal text-foreground/85 leading-relaxed">{founder.bio}</p>
             </div>
           </div>
         </div>
@@ -185,38 +260,62 @@ const Index = () => {
 
       {/* Events Highlights */}
       {events.length > 0 && (
-        <motion.section {...fadeIn} className="bg-muted/30 py-16 sm:py-20">
+        <motion.section {...fadeIn} className="bg-muted/30 py-20 sm:py-24">
           <div className="container">
-            <div className="mb-10 flex items-end justify-between">
+            <div className="mb-12 flex items-end justify-between">
               <div>
-                <p className="mb-1 text-sm font-bold uppercase tracking-wider text-secondary">What&apos;s Happening</p>
-                <h2 className="font-display text-2xl font-extrabold text-foreground sm:text-3xl">Upcoming Events</h2>
+                <p className="mb-1 text-xs font-bold uppercase tracking-widest text-secondary">Statewide Engagements</p>
+                <h2 className="font-display text-3xl font-extrabold text-foreground sm:text-4xl">Upcoming Events</h2>
               </div>
-              <Button asChild variant="ghost" className="hidden font-bold sm:inline-flex">
-                <Link to="/events">View All <ArrowRight className="ml-1 h-4 w-4" /></Link>
+              <Button asChild variant="ghost" size="lg" className="hidden font-bold sm:inline-flex text-base">
+                <Link to="/events">View All Events <ArrowRight className="ml-1.5 h-4 w-4" /></Link>
               </Button>
             </div>
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {events.slice(0, 3).map((event) => (
-                <Card key={event.id} className="overflow-hidden transition-shadow hover:shadow-md">
-                  <div className="h-40 overflow-hidden">
-                    <img src={event.image_url} alt={event.title} className="h-full w-full object-cover transition-transform duration-300 hover:scale-105" />
+                <Card key={event.id} className="overflow-hidden transition-all duration-300 hover:shadow-xl hover:border-primary/40 border border-border/80 group flex flex-col justify-between bg-card">
+                  <div>
+                    <Link to={`/events/${event.id}`} className="block h-52 overflow-hidden relative">
+                      <img src={event.image_url} alt={event.title} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                      <span className="absolute top-3.5 left-3.5 rounded-full bg-secondary text-white font-bold px-3 py-1 text-xs shadow-md">{event.category}</span>
+                    </Link>
+                    <CardContent className="p-6">
+                      {/* Bold Event Date & Time */}
+                      <div className="flex flex-wrap items-center gap-3 mb-3 text-xs sm:text-sm font-bold text-foreground/85">
+                        <span className="flex items-center gap-1.5 text-primary">
+                          <Calendar className="h-4 w-4 shrink-0" />
+                          {new Date(event.date).toLocaleDateString("en-NG", { day: "numeric", month: "short", year: "numeric" })}
+                        </span>
+                        <span>•</span>
+                        <span className="flex items-center gap-1 text-secondary">
+                          <Clock className="h-4 w-4 shrink-0" />
+                          {event.time}
+                        </span>
+                      </div>
+                      <Link to={`/events/${event.id}`}>
+                        <h3 className="mb-2 font-display text-xl font-bold text-foreground group-hover:text-primary transition-colors line-clamp-2 leading-snug">
+                          {event.title}
+                        </h3>
+                      </Link>
+                      <p className="text-sm sm:text-base font-normal text-foreground/80 line-clamp-2 leading-relaxed">
+                        {event.description}
+                      </p>
+                    </CardContent>
                   </div>
-                  <CardContent className="p-5">
-                    <span className="mb-2 inline-block rounded-full bg-secondary/10 px-2.5 py-0.5 text-xs font-bold text-secondary">{event.category}</span>
-                    <h3 className="mb-1 font-sans text-base font-bold text-foreground line-clamp-2">{event.title}</h3>
-                    <p className="mb-3 text-xs font-medium text-muted-foreground line-clamp-2">{event.description}</p>
-                    <div className="flex items-center gap-3 text-xs font-medium text-muted-foreground">
-                      <span>{new Date(event.date).toLocaleDateString("en-NG", { day: "numeric", month: "short", year: "numeric" })}</span>
-                      <span>•</span>
-                      <span>{event.location.split(",")[0]}</span>
-                    </div>
-                  </CardContent>
+                  <div className="px-6 pb-6 pt-3 border-t border-border/60 flex items-center justify-between text-sm font-semibold text-foreground/80">
+                    <span className="flex items-center gap-1.5 truncate max-w-[180px]">
+                      <MapPin className="h-4 w-4 text-primary shrink-0" />
+                      <span className="truncate">{event.location}</span>
+                    </span>
+                    <Link to={`/events/${event.id}`} className="font-bold text-primary hover:underline shrink-0">
+                      View RSVP →
+                    </Link>
+                  </div>
                 </Card>
               ))}
             </div>
-            <div className="mt-6 text-center sm:hidden">
-              <Button asChild variant="outline" className="font-bold"><Link to="/events">View All Events</Link></Button>
+            <div className="mt-8 text-center sm:hidden">
+              <Button asChild size="lg" variant="outline" className="font-bold w-full"><Link to="/events">View All Events</Link></Button>
             </div>
           </div>
         </motion.section>
@@ -224,32 +323,53 @@ const Index = () => {
 
       {/* Blog Highlights */}
       {blogPosts.length > 0 && (
-        <motion.section {...fadeIn} className="py-16 sm:py-20">
+        <motion.section {...fadeIn} className="py-20 sm:py-24">
           <div className="container">
-            <div className="mb-10 flex items-end justify-between">
+            <div className="mb-12 flex items-end justify-between">
               <div>
-                <p className="mb-1 text-sm font-bold uppercase tracking-wider text-secondary">From Our Blog</p>
-                <h2 className="font-display text-2xl font-extrabold text-foreground sm:text-3xl">Latest Articles</h2>
+                <p className="mb-1 text-xs font-bold uppercase tracking-widest text-secondary">Editorial & Policy</p>
+                <h2 className="font-display text-3xl font-extrabold text-foreground sm:text-4xl">Latest Articles</h2>
               </div>
-              <Button asChild variant="ghost" className="hidden font-bold sm:inline-flex">
-                <Link to="/blog">Read More <ArrowRight className="ml-1 h-4 w-4" /></Link>
+              <Button asChild variant="ghost" size="lg" className="hidden font-bold sm:inline-flex text-base">
+                <Link to="/blog">All Articles <ArrowRight className="ml-1.5 h-4 w-4" /></Link>
               </Button>
             </div>
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {blogPosts.slice(0, 3).map((post) => (
-                <Card key={post.id} className="overflow-hidden transition-shadow hover:shadow-md">
-                  <div className="h-40 overflow-hidden">
-                    <img src={post.image_url} alt={post.title} className="h-full w-full object-cover transition-transform duration-300 hover:scale-105" />
+                <Card key={post.id} className="overflow-hidden transition-all duration-300 hover:shadow-xl hover:border-primary/40 border border-border/80 group flex flex-col justify-between bg-card">
+                  <div>
+                    <Link to={`/blog/${post.id}`} className="block h-52 overflow-hidden relative">
+                      <img src={post.image_url} alt={post.title} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                      <span className="absolute top-3.5 left-3.5 rounded-full bg-primary text-white font-bold px-3 py-1 text-xs shadow-md">{post.category}</span>
+                    </Link>
+                    <CardContent className="p-6">
+                      <div className="flex items-center gap-3 mb-3 text-xs sm:text-sm font-bold text-foreground/80">
+                        <span className="flex items-center gap-1.5">
+                          <Calendar className="h-4 w-4 text-primary shrink-0" />
+                          {new Date(post.date).toLocaleDateString("en-NG", { day: "numeric", month: "short", year: "numeric" })}
+                        </span>
+                        <span>•</span>
+                        <span className="flex items-center gap-1 text-secondary">
+                          <Clock className="h-4 w-4 shrink-0" />
+                          {post.read_time}
+                        </span>
+                      </div>
+                      <Link to={`/blog/${post.id}`}>
+                        <h3 className="mb-2 font-display text-xl font-bold text-foreground group-hover:text-primary transition-colors line-clamp-2 leading-snug">
+                          {post.title}
+                        </h3>
+                      </Link>
+                      <p className="text-sm sm:text-base font-normal text-foreground/80 line-clamp-2 leading-relaxed">
+                        {post.excerpt}
+                      </p>
+                    </CardContent>
                   </div>
-                  <CardContent className="p-5">
-                    <span className="mb-2 inline-block rounded-full bg-primary/10 px-2.5 py-0.5 text-xs font-bold text-primary">{post.category}</span>
-                    <h3 className="mb-1 font-sans text-base font-bold text-foreground line-clamp-2">{post.title}</h3>
-                    <p className="mb-3 text-xs font-medium text-muted-foreground line-clamp-2">{post.excerpt}</p>
-                    <div className="flex items-center justify-between text-xs font-medium text-muted-foreground">
-                      <span>{new Date(post.date).toLocaleDateString("en-NG", { day: "numeric", month: "short", year: "numeric" })}</span>
-                      <span>{post.read_time}</span>
-                    </div>
-                  </CardContent>
+                  <div className="px-6 pb-6 pt-3 border-t border-border/60 flex items-center justify-between text-sm font-semibold text-foreground/80">
+                    <span className="truncate max-w-[170px]">{post.author}</span>
+                    <Link to={`/blog/${post.id}`} className="font-bold text-primary hover:underline shrink-0">
+                      Read Article →
+                    </Link>
+                  </div>
                 </Card>
               ))}
             </div>
@@ -259,25 +379,25 @@ const Index = () => {
 
       {/* Gallery/Projects Teaser */}
       {portfolioItems.length > 0 && (
-        <motion.section {...fadeIn} className="bg-muted/30 py-16 sm:py-20">
+        <motion.section {...fadeIn} className="bg-muted/30 py-20 sm:py-24">
           <div className="container">
-            <div className="mb-10 text-center">
-              <p className="mb-1 text-sm font-bold uppercase tracking-wider text-secondary">Our Work</p>
-              <h2 className="font-display text-2xl font-extrabold text-foreground sm:text-3xl">Recent Projects</h2>
+            <div className="mb-12 text-center">
+              <p className="mb-1 text-xs font-bold uppercase tracking-widest text-secondary">Our Track Record</p>
+              <h2 className="font-display text-3xl font-extrabold text-foreground sm:text-4xl">Recent Projects</h2>
             </div>
-            <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
+            <div className="grid grid-cols-2 gap-4 sm:gap-6 lg:grid-cols-4">
               {portfolioItems.slice(0, 4).map((item) => (
-                <div key={item.id} className="group relative overflow-hidden rounded-lg aspect-square">
-                  <img src={item.image_url} alt={item.title} className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105" />
-                  <div className="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-foreground/80 to-transparent p-3 opacity-0 transition-opacity group-hover:opacity-100">
-                    <h3 className="text-sm font-bold text-white">{item.title}</h3>
-                    <p className="text-xs font-medium text-white/80">{item.category}</p>
+                <div key={item.id} className="group relative overflow-hidden rounded-xl aspect-square shadow-sm">
+                  <img src={item.image_url} alt={item.title} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                  <div className="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-slate-950/90 via-slate-950/40 to-transparent p-4 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                    <span className="text-xs font-bold uppercase tracking-wider text-secondary mb-1">{item.category}</span>
+                    <h3 className="text-base font-bold text-white leading-tight">{item.title}</h3>
                   </div>
                 </div>
               ))}
             </div>
-            <div className="mt-8 text-center">
-              <Button asChild variant="outline" className="font-bold"><Link to="/portfolio">View Full Portfolio <ArrowRight className="ml-1 h-4 w-4" /></Link></Button>
+            <div className="mt-10 text-center">
+              <Button asChild size="lg" variant="outline" className="font-bold border-primary/30"><Link to="/portfolio">View Full Portfolio <ArrowRight className="ml-1.5 h-4 w-4" /></Link></Button>
             </div>
           </div>
         </motion.section>
@@ -303,9 +423,9 @@ const Index = () => {
                           href={partner.website_url || "#"}
                           target={partner.website_url ? "_blank" : undefined}
                           rel="noopener noreferrer"
-                          className="flex h-20 w-28 sm:w-36 shrink-0 items-center justify-center rounded-lg bg-white p-3 shadow-sm border border-border/30 transition-shadow hover:shadow-md"
+                          className="flex h-20 w-28 sm:w-36 shrink-0 items-center justify-center rounded-lg bg-card/90 dark:bg-card p-3 shadow-xs border border-border/70 transition-all hover:border-primary/50 hover:shadow-md"
                         >
-                          <img src={partner.logo_url} alt={partner.name} className="max-h-full max-w-full object-contain" />
+                          <img src={partner.logo_url} alt={partner.name} className="max-h-full max-w-full object-contain filter dark:brightness-105" />
                         </a>
                       ))}
                     </div>
@@ -335,15 +455,25 @@ const Index = () => {
       )}
 
       {/* Final CTA */}
-      <section className="bg-primary py-16 sm:py-20">
+      <section className="bg-primary py-16 sm:py-20 text-white">
         <div className="container text-center">
           <h2 className="mb-4 font-display text-2xl font-extrabold text-white sm:text-3xl md:text-4xl" style={{ textWrap: "balance" }}>Take Responsibility</h2>
-          <p className="mx-auto mb-8 max-w-xl text-base font-medium text-white/90">
+          <p className="mx-auto mb-8 max-w-xl text-base font-medium text-white/90 leading-relaxed">
             Be an agent of progressive change. Join Progressive Abia Youths and help us build a brighter future for Abia State.
           </p>
-          <Button asChild size="lg" className="bg-white text-primary font-bold hover:bg-white/90">
-            <Link to="/register">Join Us Today <ArrowRight className="ml-2 h-4 w-4" /></Link>
-          </Button>
+          <div className="flex flex-wrap items-center justify-center gap-3">
+            <Button asChild size="lg" className="bg-white text-slate-950 font-extrabold hover:bg-slate-100 shadow-lg transition-transform active:scale-95">
+              <Link to="/register">Join Us Today <ArrowRight className="ml-2 h-4 w-4" /></Link>
+            </Button>
+            <Button
+              asChild
+              size="lg"
+              variant="outline"
+              className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-slate-950 hover:border-white font-extrabold shadow-sm transition-all active:scale-95"
+            >
+              <Link to="/about">Learn Our Story</Link>
+            </Button>
+          </div>
         </div>
       </section>
     </Layout>

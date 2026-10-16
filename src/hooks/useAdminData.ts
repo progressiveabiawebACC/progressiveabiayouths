@@ -1,49 +1,43 @@
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
-import type { Tables, TablesInsert, TablesUpdate } from "@/integrations/supabase/types";
+// ============================================================
+// Admin data hook — replaces Supabase useAdminData
+// Uses localStorage via localStore.ts. Same API as before.
+// ============================================================
 
-type TableName = "hero_slides" | "events" | "blog_posts" | "portfolio_items" | "partners" | "team_members" | "lga_coordinators" | "site_stats";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { localGetAll, localCreate, localUpdate, localDelete } from "@/lib/localStore";
+import type { TableName, TableTypeMap } from "@/types/siteTypes";
 
 export function useAdminTable<T extends TableName>(table: T) {
   const queryClient = useQueryClient();
 
   const query = useQuery({
     queryKey: ["admin", table],
-    queryFn: async () => {
-      const { data, error } = await supabase.from(table).select("*").order("created_at", { ascending: false });
-      if (error) throw error;
-      return data as Tables<T>[];
-    },
+    queryFn: () => localGetAll(table),
   });
 
   const createMutation = useMutation({
-    mutationFn: async (item: TablesInsert<T>) => {
-      const { data, error } = await supabase.from(table).insert(item as any).select().single();
-      if (error) throw error;
-      return data;
+    mutationFn: async (item: Omit<TableTypeMap[T], "id" | "created_at" | "updated_at">) => {
+      return localCreate(table, item);
     },
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ["admin", table] }),
   });
 
   const updateMutation = useMutation({
-    mutationFn: async ({ id, ...updates }: TablesUpdate<T> & { id: string }) => {
-      const { data, error } = await supabase.from(table).update(updates as any).eq("id" as any, id).select().single();
-      if (error) throw error;
-      return data;
+    mutationFn: async ({ id, ...updates }: Partial<TableTypeMap[T]> & { id: string }) => {
+      return localUpdate(table, id, updates as Partial<TableTypeMap[T]>);
     },
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ["admin", table] }),
   });
 
   const deleteMutation = useMutation({
     mutationFn: async (id: string) => {
-      const { error } = await supabase.from(table).delete().eq("id" as any, id);
-      if (error) throw error;
+      localDelete(table, id);
     },
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ["admin", table] }),
   });
 
   return {
-    data: query.data ?? [],
+    data: (query.data ?? []) as TableTypeMap[T][],
     isLoading: query.isLoading,
     error: query.error,
     create: createMutation.mutateAsync,

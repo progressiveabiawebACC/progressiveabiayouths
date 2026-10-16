@@ -189,14 +189,14 @@ const Blog = () => {
                               </p>
                             </div>
 
-                            <div className="flex items-center justify-between pt-4 border-t border-border/70 text-sm font-semibold text-foreground/80">
-                              <span className="flex items-center gap-2">
+                            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 pt-4 border-t border-border/70 text-sm font-semibold text-foreground/80">
+                              <span className="flex items-center gap-2 text-xs sm:text-sm">
                                 <User className="h-4 w-4 text-primary shrink-0" />
-                                <span className="truncate max-w-[150px] sm:max-w-none">{post.author}</span>
+                                <span className="truncate max-w-[160px] sm:max-w-none">{post.author}</span>
                                 <span>•</span>
                                 <span>{new Date(post.date).toLocaleDateString("en-NG", { month: "short", day: "numeric", year: "numeric" })}</span>
                               </span>
-                              <Link to={`/blog/${post.id}`}>
+                              <Link to={`/blog/${post.id}`} className="self-start sm:self-auto">
                                 <Button variant="ghost" size="sm" className="font-bold text-primary group-hover:translate-x-1 transition-transform p-0 h-auto text-sm">
                                   Read Article <ArrowRight className="ml-1 h-4 w-4" />
                                 </Button>

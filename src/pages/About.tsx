@@ -132,16 +132,16 @@ const About = () => {
             <p className="mb-1 text-xs font-bold uppercase tracking-widest text-secondary">What We Stand For</p>
             <h2 className="font-display text-3xl font-extrabold text-foreground sm:text-4xl">Our Core Values</h2>
           </div>
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-4 sm:gap-5 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
             {coreValues.map((val, i) => (
               <motion.div key={val.name} {...fadeIn} transition={{ delay: i * 0.04 }}>
-                <Card className="transition-all hover:shadow-lg hover:border-primary/40 border border-border/80 bg-card">
-                  <CardContent className="flex items-start gap-4 p-6">
-                    <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
-                      <CoreValueIcon icon={val.icon} className="h-5 w-5" />
+                <Card className="transition-all hover:shadow-md border border-border/80 bg-card h-full">
+                  <CardContent className="flex flex-col items-start gap-3.5 p-5 sm:p-6 text-left">
+                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                      <CoreValueIcon icon={val.icon} className="h-6 w-6" />
                     </div>
                     <div>
-                      <h3 className="font-display text-lg font-bold text-foreground mb-1">{val.name}</h3>
+                      <h3 className="font-display text-lg sm:text-xl font-bold text-foreground mb-1.5">{val.name}</h3>
                       <p className="text-sm sm:text-base font-normal text-foreground/80 leading-relaxed">{val.description}</p>
                     </div>
                   </CardContent>
@@ -193,13 +193,13 @@ const About = () => {
 
             {/* Interactive Filters & Search */}
             <div className="mx-auto max-w-4xl mb-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-              <div className="flex flex-wrap gap-2 w-full sm:w-auto">
+              <div className="grid grid-cols-2 sm:flex sm:flex-wrap gap-2 w-full sm:w-auto">
                 {["All", "Abia Central", "Abia North", "Abia South"].map((dist) => (
                   <Button
                     key={dist}
                     size="sm"
                     variant={selectedDistrict === dist ? "default" : "outline"}
-                    className="font-bold text-xs"
+                    className="font-bold text-xs h-9 justify-center"
                     onClick={() => setSelectedDistrict(dist)}
                   >
                     {dist === "All" ? `All 17 LGAs` : dist}

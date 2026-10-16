@@ -484,14 +484,14 @@ const AdminCrudPage = ({
       </div>
 
       {/* Search and Filter Bar */}
-      <div className="mb-4 flex items-center justify-between gap-3">
+      <div className="mb-4 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
         <div className="relative flex-1 max-w-sm">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
           <Input
             placeholder={`Search ${title.toLowerCase()}...`}
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="pl-9 h-10 text-sm bg-card border-border"
+            className="pl-9 h-10 text-sm bg-card border-border w-full"
           />
         </div>
         {searchQuery && (
@@ -499,7 +499,7 @@ const AdminCrudPage = ({
             variant="ghost"
             size="sm"
             onClick={() => setSearchQuery("")}
-            className="text-xs text-muted-foreground"
+            className="text-xs text-muted-foreground self-start sm:self-auto"
           >
             Clear filter ({filteredData.length} shown)
           </Button>

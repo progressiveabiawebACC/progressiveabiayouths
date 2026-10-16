@@ -95,18 +95,18 @@ const AdminSubmissions = () => {
         </div>
 
         {/* Filter bar */}
-        <div className="flex items-center justify-between gap-3">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
           <div className="relative flex-1 max-w-sm">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
             <Input
               placeholder="Search messages by sender, email or keyword..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="pl-9 text-xs h-9 bg-card border-border"
+              className="pl-9 text-xs h-9 bg-card border-border w-full"
             />
           </div>
           {search && (
-            <Button variant="ghost" size="sm" onClick={() => setSearch("")} className="text-xs text-muted-foreground">
+            <Button variant="ghost" size="sm" onClick={() => setSearch("")} className="text-xs text-muted-foreground self-start sm:self-auto">
               Clear filter ({filtered.length} shown)
             </Button>
           )}

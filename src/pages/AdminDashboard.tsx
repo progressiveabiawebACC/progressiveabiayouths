@@ -276,12 +276,12 @@ const AdminDashboard = () => {
                   </div>
 
                   {/* Clean Senatorial District Switcher */}
-                  <div className="flex items-center gap-1 bg-muted/60 p-0.5 rounded-lg text-xs font-semibold">
+                  <div className="flex items-center gap-1 bg-muted/60 p-0.5 rounded-lg text-xs font-semibold w-full sm:w-auto">
                     {Object.keys(SENATORIAL_ZONES).map((zone) => (
                       <button
                         key={zone}
                         onClick={() => setSelectedZone(zone)}
-                        className={`px-2.5 py-1 rounded-md transition-colors text-[11px] ${
+                        className={`flex-1 sm:flex-initial text-center px-2 py-1 rounded-md transition-colors text-[11px] ${
                           selectedZone === zone
                             ? "bg-card text-foreground font-bold shadow-xs"
                             : "text-muted-foreground hover:text-foreground"

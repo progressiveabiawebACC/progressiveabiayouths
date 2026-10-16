@@ -81,14 +81,14 @@ const HeroSlider = () => {
               <p className="mb-8 text-base font-medium text-slate-100 sm:text-lg md:text-xl leading-relaxed max-w-xl">
                 {slide.subtitle}
               </p>
-              <div className="flex flex-wrap gap-3">
-                <Button asChild size="lg" className="bg-secondary text-white font-bold hover:bg-secondary/90 shadow-md">
+              <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
+                <Button asChild size="lg" className="w-full sm:w-auto bg-secondary text-white font-bold hover:bg-secondary/90 shadow-md">
                   <Link to={slide.cta1_link}>{slide.cta1_label}</Link>
                 </Button>
                 <Button
                   asChild
                   size="lg"
-                  className="bg-white/95 text-slate-900 font-bold hover:bg-white shadow-md border border-white/20 transition-all hover:scale-102"
+                  className="w-full sm:w-auto bg-white/95 text-slate-900 font-bold hover:bg-white shadow-md border border-white/20 transition-all hover:scale-102"
                 >
                   <Link to={slide.cta2_link}>{slide.cta2_label}</Link>
                 </Button>
@@ -98,20 +98,20 @@ const HeroSlider = () => {
         </motion.div>
       </AnimatePresence>
 
-      {/* Prev / Next controls with 44px minimum touch targets */}
+      {/* Prev / Next controls with mobile-friendly positioning */}
       <button
         onClick={prev}
-        className="absolute left-4 top-1/2 z-10 -translate-y-1/2 flex h-11 w-11 items-center justify-center rounded-full bg-black/40 text-white backdrop-blur-md transition hover:bg-black/60 active:scale-95 border border-white/10"
+        className="absolute left-2 sm:left-4 top-1/2 z-10 -translate-y-1/2 flex h-9 w-9 sm:h-11 sm:w-11 items-center justify-center rounded-full bg-black/40 text-white backdrop-blur-md transition hover:bg-black/60 active:scale-95 border border-white/10"
         aria-label="Previous slide"
       >
-        <ChevronLeft className="h-6 w-6" />
+        <ChevronLeft className="h-5 w-5 sm:h-6 sm:w-6" />
       </button>
       <button
         onClick={next}
-        className="absolute right-4 top-1/2 z-10 -translate-y-1/2 flex h-11 w-11 items-center justify-center rounded-full bg-black/40 text-white backdrop-blur-md transition hover:bg-black/60 active:scale-95 border border-white/10"
+        className="absolute right-2 sm:right-4 top-1/2 z-10 -translate-y-1/2 flex h-9 w-9 sm:h-11 sm:w-11 items-center justify-center rounded-full bg-black/40 text-white backdrop-blur-md transition hover:bg-black/60 active:scale-95 border border-white/10"
         aria-label="Next slide"
       >
-        <ChevronRight className="h-6 w-6" />
+        <ChevronRight className="h-5 w-5 sm:h-6 sm:w-6" />
       </button>
 
       {/* Dot Indicators */}
@@ -204,15 +204,15 @@ const Index = () => {
               Progressive Abia Youths (PAY) is a youth-led advocacy movement committed to raising <span className="font-serif-italic font-semibold text-primary">unconventional leaders</span> who will drive good governance, policy reform, and sustainable progress across Abia State.
             </p>
           </div>
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-4 sm:gap-5 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
             {coreValues.map((val) => (
-              <Card key={val.name} className="border-border/80 transition-shadow hover:shadow-lg bg-card">
-                <CardContent className="flex items-start gap-4 p-6">
-                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
-                    <CoreValueIcon icon={val.icon} className="h-5 w-5" />
+              <Card key={val.name} className="border-border/80 transition-all hover:shadow-md bg-card">
+                <CardContent className="flex flex-col items-start gap-3.5 p-5 sm:p-6 text-left">
+                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                    <CoreValueIcon icon={val.icon} className="h-6 w-6" />
                   </div>
                   <div>
-                    <h3 className="font-display text-lg font-bold text-foreground mb-1">{val.name}</h3>
+                    <h3 className="font-display text-lg sm:text-xl font-bold text-foreground mb-1.5">{val.name}</h3>
                     <p className="text-sm sm:text-base font-normal text-foreground/80 leading-relaxed">{val.description}</p>
                   </div>
                 </CardContent>
@@ -220,7 +220,7 @@ const Index = () => {
             ))}
           </div>
           <div className="mt-10 text-center">
-            <Button asChild size="lg" variant="outline" className="font-bold border-primary/30 text-foreground hover:bg-primary hover:text-white">
+            <Button asChild size="lg" variant="outline" className="font-bold border-primary/30 text-foreground hover:bg-primary hover:text-white w-full sm:w-auto">
               <Link to="/about">Learn More About Our Mission <ArrowRight className="ml-1.5 h-4 w-4" /></Link>
             </Button>
           </div>
@@ -229,13 +229,13 @@ const Index = () => {
 
       {/* Stats */}
       {stats.length > 0 && (
-        <motion.section {...fadeIn} className="border-y bg-muted/40 py-16">
+        <motion.section {...fadeIn} className="border-y bg-muted/40 py-12 sm:py-16">
           <div className="container">
-            <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
+            <div className="grid grid-cols-2 gap-6 sm:gap-8 md:grid-cols-4">
               {stats.map((stat) => (
                 <div key={stat.id} className="text-center">
                   <Counter value={stat.value} suffix={stat.suffix} />
-                  <p className="mt-2 text-base font-bold text-foreground/85 uppercase tracking-wide">{stat.label}</p>
+                  <p className="mt-2 text-xs sm:text-base font-bold text-foreground/85 uppercase tracking-wide">{stat.label}</p>
                 </div>
               ))}
             </div>
@@ -244,15 +244,19 @@ const Index = () => {
       )}
 
       {/* Founder */}
-      <motion.section {...fadeIn} className="py-20 sm:py-24">
+      <motion.section {...fadeIn} className="py-16 sm:py-24">
         <div className="container">
-          <div className="flex flex-col items-center gap-8 md:flex-row md:gap-14 max-w-5xl mx-auto">
-            <img src={founder.image} alt={founder.name} className="h-56 w-56 shrink-0 rounded-2xl object-cover shadow-xl border-2 border-primary/20" />
-            <div>
+          <div className="flex flex-col items-center gap-6 sm:gap-8 md:flex-row md:gap-14 max-w-5xl mx-auto">
+            <img
+              src={founder.image}
+              alt={founder.name}
+              className="h-44 w-44 sm:h-56 sm:w-56 shrink-0 rounded-2xl object-cover shadow-xl border-2 border-primary/20 mx-auto md:mx-0"
+            />
+            <div className="text-center md:text-left">
               <p className="mb-2 text-xs font-bold uppercase tracking-widest text-secondary">Leadership</p>
-              <h2 className="mb-2 font-display text-3xl font-extrabold text-foreground sm:text-4xl">{founder.name}</h2>
-              <p className="mb-4 text-base sm:text-lg font-bold text-primary">{founder.title}</p>
-              <p className="text-lg sm:text-xl font-normal text-foreground/85 leading-relaxed">{founder.bio}</p>
+              <h2 className="mb-2 font-display text-2xl sm:text-3xl font-extrabold text-foreground md:text-4xl">{founder.name}</h2>
+              <p className="mb-4 text-sm sm:text-base md:text-lg font-bold text-primary">{founder.title}</p>
+              <p className="text-base sm:text-lg md:text-xl font-normal text-foreground/85 leading-relaxed">{founder.bio}</p>
             </div>
           </div>
         </div>

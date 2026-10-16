@@ -46,7 +46,7 @@ const sidebarLinks: SidebarItem[] = [
 ];
 
 const AdminLayout = ({ children }: { children: React.ReactNode }) => {
-  const { isAdmin, loading, signOut } = useAuth();
+  const { isAdmin, userEmail, loading, signOut } = useAuth();
   const location = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [counts, setCounts] = useState<Record<string, number>>({});
@@ -117,7 +117,13 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
         })}
       </nav>
 
-      <div className="border-t border-border p-3 space-y-1">
+      <div className="border-t border-border p-3 space-y-2">
+        <div className="px-3 py-1.5 rounded-md bg-muted/60 border border-border/60">
+          <p className="text-[10px] uppercase font-bold tracking-wider text-muted-foreground">Admin Session</p>
+          <p className="text-xs font-semibold text-foreground truncate" title={userEmail || "progressiveabiaweb@gmail.com"}>
+            {userEmail || "progressiveabiaweb@gmail.com"}
+          </p>
+        </div>
         <Link
           to="/"
           onClick={() => setMobileOpen(false)}

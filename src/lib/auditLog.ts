@@ -1,6 +1,6 @@
 export interface AuditLogEntry {
   id: string;
-  action: "create" | "update" | "delete" | "publish" | "restore" | "reset";
+  action: "create" | "update" | "delete" | "publish" | "restore" | "reset" | "login";
   module: string;
   summary: string;
   timestamp: string;

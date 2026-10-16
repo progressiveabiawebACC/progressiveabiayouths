@@ -113,11 +113,6 @@ const Footer = () => {
                 <Youtube className="h-4 w-4" />
               </a>
             </div>
-            <div className="mt-5 text-xs text-slate-400">
-              <Link to="/admin/login" className="hover:text-slate-200 transition-colors">
-                Staff & Admin Portal →
-              </Link>
-            </div>
           </div>
         </div>
 

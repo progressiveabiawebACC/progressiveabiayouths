@@ -117,22 +117,6 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
         })}
       </nav>
 
-      {/* Live Active Status Pill */}
-      <div className="mx-3 my-2 px-3 py-2 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <span className="relative flex h-2 w-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-          </span>
-          <span className="text-[11px] font-semibold text-emerald-800 dark:text-emerald-300">
-            Front-End Live
-          </span>
-        </div>
-        <Badge variant="outline" className="text-[9px] font-mono px-1 py-0 h-4 border-emerald-500/30 text-emerald-700 dark:text-emerald-400">
-          Instant Sync
-        </Badge>
-      </div>
-
       <div className="border-t border-border p-3 space-y-1">
         <Link
           to="/"

@@ -21,18 +21,18 @@ const Navbar = () => {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/80 bg-card/95 backdrop-blur-md supports-[backdrop-filter]:bg-card/85 transition-colors duration-200">
-      <div className="container flex h-16 items-center justify-between gap-4">
-        <Link to="/" className="flex items-center gap-2.5 group focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-md p-1">
+      <div className="container flex h-16 items-center justify-between gap-3 sm:gap-4">
+        <Link to="/" className="flex items-center gap-2 sm:gap-2.5 group focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-md p-1 min-w-0">
           <img
             src="/progressive-logo.png"
             alt="Progressive Abia Youths logo"
-            className="h-10 w-auto transition-transform group-hover:scale-105"
+            className="h-8 sm:h-9 md:h-10 w-auto transition-transform group-hover:scale-105 shrink-0"
           />
-          <div className="flex flex-col">
-            <span className="font-display text-lg font-extrabold tracking-tight text-primary leading-tight">
+          <div className="flex flex-col min-w-0">
+            <span className="font-display text-sm sm:text-base md:text-lg font-extrabold tracking-tight text-primary leading-tight whitespace-nowrap">
               Progressive Abia Youths
             </span>
-            <span className="text-[10px] font-semibold text-muted-foreground uppercase tracking-widest hidden sm:block">
+            <span className="text-[10px] font-semibold text-muted-foreground uppercase tracking-widest hidden sm:block whitespace-nowrap">
               Civic Engagement & Development
             </span>
           </div>
@@ -84,17 +84,17 @@ const Navbar = () => {
               <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
 
               {/* Mobile Drawer Header */}
-              <div className="flex items-center gap-3 pb-6 border-b border-border">
+              <div className="flex items-center gap-2.5 pb-6 border-b border-border">
                 <img
                   src="/progressive-logo.png"
                   alt="PAY logo"
-                  className="h-9 w-auto"
+                  className="h-8 w-auto shrink-0"
                 />
-                <div>
-                  <span className="font-display text-base font-extrabold text-primary">
+                <div className="min-w-0">
+                  <span className="font-display text-sm sm:text-base font-extrabold text-primary whitespace-nowrap block">
                     Progressive Abia Youths
                   </span>
-                  <p className="text-xs text-muted-foreground font-medium">Empowering Abia Youths</p>
+                  <p className="text-[11px] text-muted-foreground font-medium">Empowering Abia Youths</p>
                 </div>
               </div>
 

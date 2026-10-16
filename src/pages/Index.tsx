@@ -32,8 +32,6 @@ const HeroSlider = () => {
     );
   }
 
-  const prev = () => setCurrent((c) => (c - 1 + heroSlides.length) % heroSlides.length);
-  const next = () => setCurrent((c) => (c + 1) % heroSlides.length);
   const slide = heroSlides[current];
 
   return (
@@ -97,22 +95,6 @@ const HeroSlider = () => {
           </div>
         </motion.div>
       </AnimatePresence>
-
-      {/* Prev / Next controls with mobile-friendly positioning */}
-      <button
-        onClick={prev}
-        className="absolute left-2 sm:left-4 top-1/2 z-10 -translate-y-1/2 flex h-9 w-9 sm:h-11 sm:w-11 items-center justify-center rounded-full bg-black/40 text-white backdrop-blur-md transition hover:bg-black/60 active:scale-95 border border-white/10"
-        aria-label="Previous slide"
-      >
-        <ChevronLeft className="h-5 w-5 sm:h-6 sm:w-6" />
-      </button>
-      <button
-        onClick={next}
-        className="absolute right-2 sm:right-4 top-1/2 z-10 -translate-y-1/2 flex h-9 w-9 sm:h-11 sm:w-11 items-center justify-center rounded-full bg-black/40 text-white backdrop-blur-md transition hover:bg-black/60 active:scale-95 border border-white/10"
-        aria-label="Next slide"
-      >
-        <ChevronRight className="h-5 w-5 sm:h-6 sm:w-6" />
-      </button>
 
       {/* Dot Indicators */}
       <div className="absolute bottom-6 left-1/2 z-10 flex -translate-x-1/2 items-center gap-2.5 p-2 bg-black/30 backdrop-blur-sm rounded-full">

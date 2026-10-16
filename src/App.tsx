@@ -25,45 +25,54 @@ import AdminPartners from "./pages/admin/AdminPartners";
 import AdminTeam from "./pages/admin/AdminTeam";
 import AdminLgaCoordinators from "./pages/admin/AdminLgaCoordinators";
 import AdminStats from "./pages/admin/AdminStats";
+import AdminSettings from "./pages/admin/AdminSettings";
 import ScrollToTop from "./components/ScrollToTop";
+import { ThemeProvider } from "./components/ThemeProvider";
 
 const queryClient = new QueryClient();
 
 const App = () => (
   <ErrorBoundary>
-    <QueryClientProvider client={queryClient}>
-      <AuthProvider>
-        <TooltipProvider>
-          <Toaster />
-          <Sonner />
-          <BrowserRouter>
-            <ScrollToTop />
-            <Routes>
-              <Route path="/" element={<Index />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/events" element={<Events />} />
-              <Route path="/portfolio" element={<Portfolio />} />
-              <Route path="/register" element={<Register />} />
-              <Route path="/contact" element={<Contact />} />
-              <Route path="/blog" element={<Blog />} />
-              <Route path="/blog/:id" element={<BlogPost />} />
-              <Route path="/events/:id" element={<EventDetail />} />
-              <Route path="/admin/login" element={<AdminLogin />} />
-              <Route path="/admin" element={<AdminDashboard />} />
-              <Route path="/admin/hero-slides" element={<AdminHeroSlides />} />
-              <Route path="/admin/events" element={<AdminEvents />} />
-              <Route path="/admin/blog-posts" element={<AdminBlogPosts />} />
-              <Route path="/admin/portfolio" element={<AdminPortfolio />} />
-              <Route path="/admin/partners" element={<AdminPartners />} />
-              <Route path="/admin/team" element={<AdminTeam />} />
-              <Route path="/admin/lga-coordinators" element={<AdminLgaCoordinators />} />
-              <Route path="/admin/stats" element={<AdminStats />} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </BrowserRouter>
-        </TooltipProvider>
-      </AuthProvider>
-    </QueryClientProvider>
+    <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+      <QueryClientProvider client={queryClient}>
+        <AuthProvider>
+          <TooltipProvider>
+            <Toaster />
+            <Sonner />
+            <BrowserRouter>
+              <ScrollToTop />
+              <Routes>
+                {/* Public routes */}
+                <Route path="/"           element={<Index />} />
+                <Route path="/about"      element={<About />} />
+                <Route path="/events"     element={<Events />} />
+                <Route path="/events/:id" element={<EventDetail />} />
+                <Route path="/portfolio"  element={<Portfolio />} />
+                <Route path="/register"   element={<Register />} />
+                <Route path="/contact"    element={<Contact />} />
+                <Route path="/blog"       element={<Blog />} />
+                <Route path="/blog/:id"   element={<BlogPost />} />
+
+                {/* Admin routes */}
+                <Route path="/admin/login"            element={<AdminLogin />} />
+                <Route path="/admin"                  element={<AdminDashboard />} />
+                <Route path="/admin/hero-slides"      element={<AdminHeroSlides />} />
+                <Route path="/admin/events"           element={<AdminEvents />} />
+                <Route path="/admin/blog-posts"       element={<AdminBlogPosts />} />
+                <Route path="/admin/portfolio"        element={<AdminPortfolio />} />
+                <Route path="/admin/partners"         element={<AdminPartners />} />
+                <Route path="/admin/team"             element={<AdminTeam />} />
+                <Route path="/admin/lga-coordinators" element={<AdminLgaCoordinators />} />
+                <Route path="/admin/stats"            element={<AdminStats />} />
+                <Route path="/admin/settings"         element={<AdminSettings />} />
+
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </BrowserRouter>
+          </TooltipProvider>
+        </AuthProvider>
+      </QueryClientProvider>
+    </ThemeProvider>
   </ErrorBoundary>
 );
 

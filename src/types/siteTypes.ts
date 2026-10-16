@@ -102,6 +102,19 @@ export interface SiteStat {
   updated_at: string;
 }
 
+export interface FormSubmission {
+  id: string;
+  name: string;
+  email: string;
+  phone?: string | null;
+  subject?: string | null;
+  message: string;
+  source?: string | null;
+  is_read?: boolean;
+  created_at: string;
+  updated_at: string;
+}
+
 export type TableName =
   | "hero_slides"
   | "events"
@@ -110,7 +123,8 @@ export type TableName =
   | "partners"
   | "team_members"
   | "lga_coordinators"
-  | "site_stats";
+  | "site_stats"
+  | "submissions";
 
 export type TableTypeMap = {
   hero_slides: HeroSlide;
@@ -121,4 +135,5 @@ export type TableTypeMap = {
   team_members: TeamMember;
   lga_coordinators: LgaCoordinator;
   site_stats: SiteStat;
+  submissions: FormSubmission;
 };

@@ -26,6 +26,7 @@ import AdminTeam from "./pages/admin/AdminTeam";
 import AdminLgaCoordinators from "./pages/admin/AdminLgaCoordinators";
 import AdminStats from "./pages/admin/AdminStats";
 import AdminSettings from "./pages/admin/AdminSettings";
+import AdminSubmissions from "./pages/admin/AdminSubmissions";
 import ScrollToTop from "./components/ScrollToTop";
 import { ThemeProvider } from "./components/ThemeProvider";
 
@@ -56,6 +57,7 @@ const App = () => (
                 {/* Admin routes */}
                 <Route path="/admin/login"            element={<AdminLogin />} />
                 <Route path="/admin"                  element={<AdminDashboard />} />
+                <Route path="/admin/submissions"      element={<AdminSubmissions />} />
                 <Route path="/admin/hero-slides"      element={<AdminHeroSlides />} />
                 <Route path="/admin/events"           element={<AdminEvents />} />
                 <Route path="/admin/blog-posts"       element={<AdminBlogPosts />} />

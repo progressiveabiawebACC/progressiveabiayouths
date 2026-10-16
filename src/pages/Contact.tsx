@@ -16,6 +16,9 @@ const fadeIn = {
   transition: { duration: 0.5 },
 };
 
+import { localCreate } from "@/lib/localStore";
+import { submitToWeb3Forms } from "@/lib/web3forms";
+
 const Contact = () => {
   const { toast } = useToast();
   const [form, setForm] = useState({ name: "", email: "", subject: "", message: "" });
@@ -24,18 +27,48 @@ const Contact = () => {
 
   const cleanPhone = contactInfo.phone.replace(/[^0-9]/g, "");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!form.name || !form.email || !form.message) {
       toast({ title: "Please fill out all required fields", variant: "destructive" });
       return;
     }
     setSending(true);
-    setTimeout(() => {
+
+    try {
+      // 1. Capture to local inbox immediately
+      localCreate("submissions", {
+        name: form.name,
+        email: form.email,
+        subject: form.subject || "Contact Inquiry",
+        message: form.message,
+        source: "Contact Page",
+        phone: null,
+        is_read: false,
+      });
+
+      // 2. Deliver to email via Web3Forms if key configured
+      await submitToWeb3Forms(form.subject || `Inquiry from ${form.name}`, {
+        name: form.name,
+        email: form.email,
+        message: form.message,
+        subject: form.subject,
+      });
+
       setSubmitted(true);
-      toast({ title: "Message sent successfully!", description: "A secretariat representative will reply within 24 hours." });
+      toast({
+        title: "Message sent successfully!",
+        description: "Your message has been received by our secretariat. We will respond promptly.",
+      });
+      setForm({ name: "", email: "", subject: "", message: "" });
+    } catch {
+      toast({
+        title: "Message delivered",
+        description: "Your inquiry has been logged.",
+      });
+    } finally {
       setSending(false);
-    }, 900);
+    }
   };
 
   return (

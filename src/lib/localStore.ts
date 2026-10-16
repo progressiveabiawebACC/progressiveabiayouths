@@ -134,6 +134,20 @@ const seedMap: Record<TableName, () => unknown[]> = {
       created_at: now(),
       updated_at: now(),
     })),
+  submissions: () => [
+    {
+      id: "sub-1",
+      name: "Chukwudi Eze",
+      email: "chukwudi.eze@example.com",
+      phone: "+234 803 123 4567",
+      subject: "Youth Partnership in Aba North",
+      message: "Hello Progressive Abia Youths, I am writing on behalf of our community youth association in Aba North to partner with your digital empowerment initiatives.",
+      source: "Contact Form",
+      is_read: false,
+      created_at: now(),
+      updated_at: now(),
+    },
+  ],
 };
 
 // ── Core CRUD ────────────────────────────────────────────────

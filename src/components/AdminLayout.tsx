@@ -14,7 +14,7 @@ import {
   Home,
   Menu,
   Settings,
-  Cloud,
+  Mail,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet";
@@ -33,6 +33,7 @@ interface SidebarItem {
 
 const sidebarLinks: SidebarItem[] = [
   { label: "Dashboard",        path: "/admin",                  icon: LayoutDashboard },
+  { label: "Inbox Messages",   path: "/admin/submissions",      icon: Mail,         table: "submissions" },
   { label: "Hero Slides",      path: "/admin/hero-slides",      icon: Image,        table: "hero_slides" },
   { label: "Events",           path: "/admin/events",           icon: CalendarDays, table: "events" },
   { label: "Blog Posts",       path: "/admin/blog-posts",       icon: FileText,     table: "blog_posts" },
@@ -41,7 +42,7 @@ const sidebarLinks: SidebarItem[] = [
   { label: "Team",             path: "/admin/team",             icon: Users,        table: "team_members" },
   { label: "LGA Coordinators", path: "/admin/lga-coordinators", icon: MapPin,       table: "lga_coordinators" },
   { label: "Stats",            path: "/admin/stats",            icon: BarChart3,    table: "site_stats" },
-  { label: "Settings & Deploy",path: "/admin/settings",         icon: Settings },
+  { label: "Settings & Backup",path: "/admin/settings",         icon: Settings },
 ];
 
 const AdminLayout = ({ children }: { children: React.ReactNode }) => {
@@ -116,7 +117,7 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
         })}
       </nav>
 
-      {/* Cloudflare Edge Status Pill */}
+      {/* Live Active Status Pill */}
       <div className="mx-3 my-2 px-3 py-2 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <span className="relative flex h-2 w-2">
@@ -124,11 +125,11 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
             <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
           </span>
           <span className="text-[11px] font-semibold text-emerald-800 dark:text-emerald-300">
-            Cloudflare Pages
+            Front-End Live
           </span>
         </div>
         <Badge variant="outline" className="text-[9px] font-mono px-1 py-0 h-4 border-emerald-500/30 text-emerald-700 dark:text-emerald-400">
-          Edge Ready
+          Instant Sync
         </Badge>
       </div>
 

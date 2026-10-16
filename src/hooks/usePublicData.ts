@@ -1,22 +1,10 @@
 // ============================================================
-// Public data hooks — replaces Supabase usePublicData
-// Reads directly from siteData.ts (static, no network calls).
-// localStorage is intentionally NOT used here — public visitors
-// always see the published siteData.ts. Admins use the Export
-// feature to publish their localStorage edits.
+// Public data hooks — connects directly to localStore.
+// Reads live CMS data so any admin updates, posts, or coordinator
+// edits appear immediately on the front end!
 // ============================================================
 
-import {
-  heroSlides as rawHero,
-  events as rawEvents,
-  blogPosts as rawBlog,
-  portfolioItems as rawPortfolio,
-  partners as rawPartners,
-  teamMembers as rawTeam,
-  lgaCoordinators as rawLgas,
-  stats as rawStats,
-} from "@/data/siteData";
-
+import { localGetAll } from "@/lib/localStore";
 import type {
   HeroSlide,
   SiteEvent,
@@ -28,149 +16,98 @@ import type {
   SiteStat,
 } from "@/types/siteTypes";
 
-const now = () => new Date().toISOString();
+export const useHeroSlides = () => {
+  try {
+    const slides = localGetAll("hero_slides");
+    return {
+      data: slides.filter((s: HeroSlide) => s.is_active).sort((a: HeroSlide, b: HeroSlide) => a.sort_order - b.sort_order),
+      isLoading: false,
+    };
+  } catch {
+    return { data: [], isLoading: false };
+  }
+};
 
-// ── Mapped data (siteData shape → storage shape) ────────────
+export const useEvents = () => {
+  try {
+    const events = localGetAll("events");
+    return {
+      data: events.filter((e: SiteEvent) => e.is_active).sort((a: SiteEvent, b: SiteEvent) => (a.date > b.date ? -1 : 1)),
+      isLoading: false,
+    };
+  } catch {
+    return { data: [], isLoading: false };
+  }
+};
 
-const heroSlides: HeroSlide[] = rawHero.map((s, i) => ({
-  id: String(s.id),
-  title: s.title,
-  subtitle: s.subtitle,
-  cta1_label: s.cta1.label,
-  cta1_link: s.cta1.link,
-  cta2_label: s.cta2.label,
-  cta2_link: s.cta2.link,
-  image_url: s.image,
-  sort_order: i + 1,
-  is_active: true,
-  created_at: now(),
-  updated_at: now(),
-}));
+export const useBlogPosts = () => {
+  try {
+    const posts = localGetAll("blog_posts");
+    return {
+      data: posts.filter((p: BlogPost) => p.is_published).sort((a: BlogPost, b: BlogPost) => (a.date > b.date ? -1 : 1)),
+      isLoading: false,
+    };
+  } catch {
+    return { data: [], isLoading: false };
+  }
+};
 
-const events: SiteEvent[] = rawEvents.map((e) => ({
-  id: String(e.id),
-  title: e.title,
-  description: e.description,
-  date: e.date,
-  time: e.time,
-  location: e.location,
-  category: e.category,
-  image_url: e.image,
-  is_active: true,
-  created_at: now(),
-  updated_at: now(),
-}));
+export const usePortfolioItems = () => {
+  try {
+    const items = localGetAll("portfolio_items");
+    return {
+      data: items.filter((i: PortfolioItem) => i.is_active).sort((a: PortfolioItem, b: PortfolioItem) => a.sort_order - b.sort_order),
+      isLoading: false,
+    };
+  } catch {
+    return { data: [], isLoading: false };
+  }
+};
 
-const blogPosts: BlogPost[] = rawBlog.map((p) => ({
-  id: String(p.id),
-  title: p.title,
-  excerpt: p.excerpt,
-  content: p.content,
-  author: p.author,
-  date: p.date,
-  category: p.category,
-  tags: p.tags,
-  image_url: p.image,
-  read_time: p.readTime,
-  is_published: true,
-  created_at: now(),
-  updated_at: now(),
-}));
+export const usePartners = () => {
+  try {
+    const partners = localGetAll("partners");
+    return {
+      data: partners.filter((p: Partner) => p.is_active).sort((a: Partner, b: Partner) => a.sort_order - b.sort_order),
+      isLoading: false,
+    };
+  } catch {
+    return { data: [], isLoading: false };
+  }
+};
 
-const portfolioItems: PortfolioItem[] = rawPortfolio.map((item, i) => ({
-  id: String(item.id),
-  title: item.title,
-  description: item.description,
-  category: item.category,
-  image_url: item.image,
-  sort_order: i + 1,
-  is_active: true,
-  created_at: now(),
-  updated_at: now(),
-}));
+export const useTeamMembers = () => {
+  try {
+    const team = localGetAll("team_members");
+    return {
+      data: team.filter((m: TeamMember) => m.is_active).sort((a: TeamMember, b: TeamMember) => a.sort_order - b.sort_order),
+      isLoading: false,
+    };
+  } catch {
+    return { data: [], isLoading: false };
+  }
+};
 
-const partners: Partner[] = rawPartners.map((p, i) => ({
-  id: String(i + 1),
-  name: p.name,
-  logo_url: p.logo,
-  website_url: null,
-  sort_order: i + 1,
-  is_active: true,
-  created_at: now(),
-  updated_at: now(),
-}));
+export const useLgaCoordinators = () => {
+  try {
+    const lgas = localGetAll("lga_coordinators");
+    return {
+      data: lgas.filter((l: LgaCoordinator) => l.is_active).sort((a: LgaCoordinator, b: LgaCoordinator) => a.lga.localeCompare(b.lga)),
+      isLoading: false,
+    };
+  } catch {
+    return { data: [], isLoading: false };
+  }
+};
 
-const teamMembers: TeamMember[] = rawTeam.map((m, i) => ({
-  id: String(i + 1),
-  name: m.name,
-  role: m.role,
-  image_url: m.image,
-  bio: null,
-  sort_order: i + 1,
-  is_active: true,
-  created_at: now(),
-  updated_at: now(),
-}));
-
-const lgaCoordinators: LgaCoordinator[] = rawLgas.map((l, i) => ({
-  id: String(i + 1),
-  lga: l.lga,
-  name: l.name,
-  phone: l.phone || null,
-  is_active: true,
-  created_at: now(),
-  updated_at: now(),
-}));
-
-const siteStats: SiteStat[] = rawStats.map((s, i) => ({
-  id: String(i + 1),
-  label: s.label,
-  value: s.value,
-  suffix: s.suffix,
-  sort_order: i + 1,
-  created_at: now(),
-  updated_at: now(),
-}));
-
-// ── Public hooks ─────────────────────────────────────────────
-// These are synchronous (no loading state needed) since data is static.
-
-export const useHeroSlides = () => ({
-  data: heroSlides.filter((s) => s.is_active).sort((a, b) => a.sort_order - b.sort_order),
-  isLoading: false,
-});
-
-export const useEvents = () => ({
-  data: events.filter((e) => e.is_active).sort((a, b) => (a.date > b.date ? -1 : 1)),
-  isLoading: false,
-});
-
-export const useBlogPosts = () => ({
-  data: blogPosts.filter((p) => p.is_published).sort((a, b) => (a.date > b.date ? -1 : 1)),
-  isLoading: false,
-});
-
-export const usePortfolioItems = () => ({
-  data: portfolioItems.filter((i) => i.is_active).sort((a, b) => a.sort_order - b.sort_order),
-  isLoading: false,
-});
-
-export const usePartners = () => ({
-  data: partners.filter((p) => p.is_active).sort((a, b) => a.sort_order - b.sort_order),
-  isLoading: false,
-});
-
-export const useTeamMembers = () => ({
-  data: teamMembers.filter((m) => m.is_active).sort((a, b) => a.sort_order - b.sort_order),
-  isLoading: false,
-});
-
-export const useLgaCoordinators = () => ({
-  data: lgaCoordinators.filter((l) => l.is_active).sort((a, b) => a.lga.localeCompare(b.lga)),
-  isLoading: false,
-});
-
-export const useSiteStats = () => ({
-  data: siteStats.sort((a, b) => a.sort_order - b.sort_order),
-  isLoading: false,
-});
+export const useSiteStats = () => {
+  try {
+    const stats = localGetAll("site_stats");
+    return {
+      data: stats.sort((a: SiteStat, b: SiteStat) => a.sort_order - b.sort_order),
+      isLoading: false,
+    };
+  } catch {
+    return { data: [], isLoading: false };
+  }
+};
